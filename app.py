@@ -353,11 +353,7 @@ fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Year vs Month)")
 
 st.plotly_chart(fig, use_container_width=True)
 
-X = df[[
-    'YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND',
-    'APT_ICAO', 'STATE_NAME',
-    'DEP_ARR_RATIO', 'IFR_RATIO'
-]]
+X = df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
 
 y = df['FLT_TOT_1']
 
@@ -368,8 +364,6 @@ actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
 actual_vs_pred_df.rename(columns={
     'FLT_TOT_1': 'Actual'
 }, inplace=True)
-
-import plotly.express as px
 
 fig = px.scatter(
     actual_vs_pred_df,
