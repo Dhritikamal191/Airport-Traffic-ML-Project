@@ -353,4 +353,50 @@ fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Year vs Month)")
 
 st.plotly_chart(fig, use_container_width=True)
 
-px.line(actual_vs_pred_df, x="DAY", y=["Actual","Predicted"])
+X = df[[
+    'YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND',
+    'APT_ICAO', 'STATE_NAME',
+    'DEP_ARR_RATIO', 'IFR_RATIO'
+]]
+
+y = df['FLT_TOT_1']
+
+df['Predicted'] = model.predict(X)
+
+actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
+
+actual_vs_pred_df.rename(columns={
+    'FLT_TOT_1': 'Actual'
+}, inplace=True)
+
+import plotly.express as px
+
+fig = px.scatter(
+    actual_vs_pred_df,
+    x='Actual',
+    y='Predicted',
+    title="Actual vs Predicted"
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+fig = px.line(
+    actual_vs_pred_df,
+    x='FLT_DATE',
+    y=['Actual', 'Predicted'],
+    title="Prediction Monitoring Over Time"
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+actual_vs_pred_df['Error'] = abs(
+    actual_vs_pred_df['Actual'] - actual_vs_pred_df['Predicted']
+)
+
+error_trend = actual_vs_pred_df.groupby(
+    actual_vs_pred_df['FLT_DATE'].dt.month
+)['Error'].mean().reset_index()
+
+fig = px.line(error_trend, x='FLT_DATE', y='Error', title="Error Trend")
+
+st.plotly_chart(fig, use_container_width=True)
