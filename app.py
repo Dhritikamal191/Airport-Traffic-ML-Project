@@ -352,3 +352,5 @@ heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc
 fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Year vs Month)")
 
 st.plotly_chart(fig, use_container_width=True)
+
+px.line(actual_vs_pred_df, x="DAY", y=["Actual","Predicted"])
