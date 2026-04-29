@@ -408,7 +408,7 @@ with col2:
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
 
-st.subheader("Heatmap (Day vs Month")
+st.subheader("Heatmap (Day vs Month"))
 
 heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
 
@@ -438,7 +438,7 @@ fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"
 st.plotly_chart(fig, use_container_width=True)
 
 fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'],title="Prediction Monitoring Over Time")
-
+fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 st.plotly_chart(fig, use_container_width=True)
 
 actual_vs_pred_df['Error'] = abs(actual_vs_pred_df['Actual'] - actual_vs_pred_df['Predicted'])
