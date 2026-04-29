@@ -1,3 +1,14 @@
+# ===============================
+# IMPORTS
+# ===============================
+import streamlit as st
+import pandas as pd
+import pickle
+import shap
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+
 st.markdown("""
 <style>
 
@@ -113,17 +124,6 @@ h1, h2, h3 {
 
 </style>
 """, unsafe_allow_html=True)
-
-# ===============================
-# IMPORTS
-# ===============================
-import streamlit as st
-import pandas as pd
-import pickle
-import shap
-import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
 
 # ===============================
 # CONFIG
