@@ -267,7 +267,7 @@ if st.session_state.show_shap:
 
         fig_global = px.bar(global_importance.head(15),x='Importance',y='Feature',orientation='h',color='Importance',color_continuous_scale='Blues',title="Top Features (Global Impact)")
 
-        fig_global.update_layout(yaxis={'categoryorder':'total ascending'})
+        fig_global.update_layout(yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
         st.plotly_chart(fig_global, use_container_width=True)
 
         # ===============================
@@ -281,7 +281,7 @@ if st.session_state.show_shap:
 
         fig_waterfall = go.Figure(go.Bar(x=waterfall_df['SHAP Value'],y=waterfall_df['Feature'],orientation='h',marker=dict(color=waterfall_df['SHAP Value'],colorscale='RdBu')))
 
-        fig_waterfall.update_layout(title="Feature Contribution (Positive vs Negative)",yaxis={'categoryorder':'total ascending'})
+        fig_waterfall.update_layout(title="Feature Contribution (Positive vs Negative)",yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 
         st.plotly_chart(fig_waterfall, use_container_width=True)
 
@@ -382,9 +382,8 @@ st.subheader("IFR vs Total Flights Comparison")
 
 ifr_df = df.groupby(['APT_ICAO','MONTH'])[['FLT_TOT_1','FLT_TOT_IFR_2']].mean().reset_index()
 
-fig = px.line(ifr_df,x='MONTH',y=['FLT_TOT_1','FLT_TOT_IFR_2'],
-markers=True,title="IFR vs Total Flights (Monthly)")
-
+fig = px.line(ifr_df,x='MONTH',y=['FLT_TOT_1','FLT_TOT_IFR_2'],markers=True,title="IFR vs Total Flights (Monthly)")
+fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 st.plotly_chart(fig, use_container_width=True)
 
 col1,col2=st.columns(2)
@@ -395,7 +394,7 @@ with col1:
      state_df = df.groupby('STATE_NAME')['FLT_TOT_1'].sum().nlargest(10).reset_index()
 
      fig = px.bar(state_df,x='STATE_NAME',y='FLT_TOT_1',title= "Top States by Traffic",text_auto=True)
-
+     fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
 
 with col2:
@@ -406,7 +405,7 @@ with col2:
      week_df['Type'] = week_df['IS_WEEKEND'].map({0:'Weekday',1:'Weekend'})
 
      fig = px.bar(week_df,x='Type',y='FLT_TOT_1',title="Weekend vs Weekday Traffic")
-
+     fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("Heatmap (Day vs Month")
@@ -414,7 +413,7 @@ st.subheader("Heatmap (Day vs Month")
 heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
 
 fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Year vs Month)")
-
+fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 st.plotly_chart(fig, use_container_width=True)
 
 X = df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
@@ -425,9 +424,7 @@ df['Predicted'] = model.predict(X)
 
 actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
 
-actual_vs_pred_df.rename(columns={
-    'FLT_TOT_1': 'Actual'
-}, inplace=True)
+actual_vs_pred_df.rename(columns={'FLT_TOT_1': 'Actual'}, inplace=True)
 
 fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",title="Actual vs Predicted (Model Performance)",opacity=0.6)
 # Add perfect prediction line
@@ -451,12 +448,7 @@ error_trend = actual_vs_pred_df.groupby(actual_vs_pred_df['FLT_DATE'].dt.month)[
 # Rolling mean
 actual_vs_pred_df['Rolling_Error'] = actual_vs_pred_df['Error'].rolling(5).mean()
 
-fig = px.line(
-    actual_vs_pred_df,
-    x='FLT_DATE',
-    y=['Error', 'Rolling_Error'],
-    title="Error Trend Monitoring"
-)
+fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Error', 'Rolling_Error'],title="Error Trend Monitoring")
 
 # Add alert threshold
 threshold = actual_vs_pred_df['Error'].mean() * 1.5
