@@ -408,7 +408,7 @@ with col2:
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
 
-st.subheader("Heatmap (Day vs Month"))
+st.subheader("Heatmap (Day vs Month)")
 
 heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
 
