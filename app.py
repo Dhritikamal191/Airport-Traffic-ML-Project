@@ -16,8 +16,8 @@ st.markdown("""
    🌙 GLOBAL DARK THEME
 =============================== */
 body {
-    background: rgba(31, 41, 55, 0.7);
-    backdrop-filter: blur(10px);
+      background-color: #0e1117;
+    color: #ffffff;
 }
 
 /* ===============================
