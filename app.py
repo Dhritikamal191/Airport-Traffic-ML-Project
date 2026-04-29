@@ -212,19 +212,6 @@ if st.button("Predict Traffic"):
     col1.metric("Predicted Flights", int(pred))
     col2.metric("Selected Month", month)
     col3.metric("Airport", airport)
-
-st.markdown(f"""
-<div style="
-    background:#1f2937;
-    padding:20px;
-    border-radius:12px;
-    text-align:center;
-    border:1px solid #374151;
-">
-    <h3>✈️ Predicted Flights</h3>
-    <h1>{int(pred)}</h1>
-</div>
-""", unsafe_allow_html=True)
 # ===============================
 # INSIGHTS
 # ===============================
