@@ -200,24 +200,20 @@ with col1:
      st.write("### Monthly Average Traffic")
 
      monthly = df.groupby('MONTH')['FLT_TOT_1'].mean().reset_index()
-
      fig = px.line(monthly,x='MONTH',y='FLT_TOT_1', markers=True,title="Monthly Average Flight Traffic")
-
      fig.update_layout(xaxis_title="Month",yaxis_title="Average Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
-
+     fig.update_xaxes(showgrid=False)
+     fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
 
 with col2:
      st.write("### Top 10 Airports")
 
-     top_airports = (df.groupby('APT_ICAO')['FLT_TOT_1'].sum()
-.nlargest(10).reset_index())
-
-     fig = px.bar(top_airports,x='APT_ICAO',y='FLT_TOT_1',
-title="Top 10 Busiest Airports",text_auto=True)
-
+     top_airports = (df.groupby('APT_ICAO')['FLT_TOT_1'].sum().nlargest(10).reset_index())
+     fig = px.bar(top_airports,x='APT_ICAO',y='FLT_TOT_1',title="Top 10 Busiest Airports",text_auto=True)
      fig.update_layout(xaxis_title="Airport",yaxis_title="Total Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
-
+     fig.update_xaxes(showgrid=False)
+     fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
 
 # ===============================
@@ -291,14 +287,12 @@ if st.session_state.show_shap:
         # ===============================
 
         interaction_feature = st.selectbox("Select Interaction Feature (color)",feature_names,index=1)
-
         interaction_index = list(feature_names).index(interaction_feature)
-
         feature_index = list(feature_names).index(interaction_feature)
         dependence_df = pd.DataFrame({'Feature Value': X_sample[:, feature_index],'SHAP Value': shap_values_global[:, feature_index],'Interaction Feature': X_sample[:, interaction_index]})
 
         fig_dep = px.scatter(dependence_df,x='Feature Value',y='SHAP Value',color='Interaction Feature', color_continuous_scale='Viridis',title=f"Dependence Plot: {interaction_feature}",opacity=0.7,trendline="lowess")
-
+       
         # ===============================
         # LAYOUT IMPROVEMENTS
         # ===============================
@@ -306,7 +300,8 @@ if st.session_state.show_shap:
 
         # Better hover
         fig_dep.update_traces(marker=dict(size=6), hovertemplate="<b>Feature Value:</b> %{x}<br>" +"<b>SHAP Value:</b> %{y}<br>" +"<b>Interaction:</b> %{marker.color}<extra></extra>")
-
+        fig.update_xaxes(showgrid=False)
+        fig.update_yaxes(showgrid=False)
         st.plotly_chart(fig_dep, use_container_width=True)
 
     except Exception as e:
@@ -366,11 +361,10 @@ if st.button("Generate Forecast"):
     # ===============================
     # PLOT
     # ===============================
-    fig = px.line(future_df,x='MONTH',y='Predicted Flights',
-markers=True,title="Next 6 Months Flight Forecast")
-
+    fig = px.line(future_df,x='MONTH',y='Predicted Flights',markers=True,title="Next 6 Months Flight Forecast")
     fig.update_layout(xaxis_title="Month",yaxis_title= "Predicted Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
-
+    fig.update_xaxes(showgrid=False)
+    fig.update_yaxes(showgrid=False)
     st.plotly_chart(fig, use_container_width=True)
 
     # ===============================
@@ -384,6 +378,8 @@ ifr_df = df.groupby(['APT_ICAO','MONTH'])[['FLT_TOT_1','FLT_TOT_IFR_2']].mean().
 
 fig = px.line(ifr_df,x='MONTH',y=['FLT_TOT_1','FLT_TOT_IFR_2'],markers=True,title="IFR vs Total Flights (Monthly)")
 fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+fig.update_xaxes(showgrid=False)
+fig.update_yaxes(showgrid=False)
 st.plotly_chart(fig, use_container_width=True)
 
 col1,col2=st.columns(2)
@@ -406,6 +402,8 @@ with col2:
 
      fig = px.bar(week_df,x='Type',y='FLT_TOT_1',title="Weekend vs Weekday Traffic")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     fig.update_xaxes(showgrid=False)
+     fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("Heatmap (Day vs Month)")
@@ -430,15 +428,17 @@ fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",titl
 # Add perfect prediction line
 min_val = min(actual_vs_pred_df['Actual'].min(), actual_vs_pred_df['Predicted'].min())
 max_val = max(actual_vs_pred_df['Actual'].max(), actual_vs_pred_df['Predicted'].max())
-
 fig.add_shape(type="line",x0=min_val, y0=min_val,x1=max_val, y1=max_val,line=dict(dash="dash"))
 fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Actual Flights",yaxis_title="Predicted Flights",title_x=0.3)
-
+fig.update_xaxes(showgrid=False)
+fig.update_yaxes(showgrid=False)
 fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"<b>Predicted:</b> %{y}<extra></extra>")
 st.plotly_chart(fig, use_container_width=True)
 
 fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'],title="Prediction Monitoring Over Time")
 fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+fig.update_xaxes(showgrid=False)
+fig.update_yaxes(showgrid=False)
 st.plotly_chart(fig, use_container_width=True)
 
 actual_vs_pred_df['Error'] = abs(actual_vs_pred_df['Actual'] - actual_vs_pred_df['Predicted'])
@@ -456,5 +456,6 @@ threshold = actual_vs_pred_df['Error'].mean() * 1.5
 fig.add_hline(y=threshold,line_dash="dash",annotation_text="Alert Threshold")
 
 fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
-
+fig.update_xaxes(showgrid=False)
+fig.update_yaxes(showgrid=False)
 st.plotly_chart(fig, use_container_width=True)
