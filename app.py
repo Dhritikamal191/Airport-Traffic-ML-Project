@@ -278,8 +278,7 @@ if st.session_state.show_shap:
         fig_waterfall = go.Figure(go.Bar(x=waterfall_df['SHAP Value'],y=waterfall_df['Feature'],orientation='h',marker=dict(color=waterfall_df['SHAP Value'],colorscale='RdBu')))
 
         fig_waterfall.update_layout(title="Feature Contribution (Positive vs Negative)",yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
-        fig.update_xaxes(showgrid=False)
-        fig.update_yaxes(showgrid=False)
+        
         st.plotly_chart(fig_waterfall, use_container_width=True)
 
         # ===============================
