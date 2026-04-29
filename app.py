@@ -13,47 +13,29 @@ st.markdown("""
 <style>
 
 /* ===============================
-   🌙 GLOBAL DARK THEME
+   🌙 MAIN APP BACKGROUND FIX
 =============================== */
-body {
-      background-color: #0e1117;
-    color: #ffffff;
-}
-
-/* ===============================
-   📦 MAIN CONTAINER
-=============================== */
-.block-container {
-    padding-top: 2rem;
-}
-
-/* ===============================
-   🔘 BUTTON STYLING
-=============================== */
-.stButton>button {
-    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+[data-testid="stAppViewContainer"] {
+    background-color: #0e1117;
     color: white;
-    border-radius: 10px;
-    border: none;
-    padding: 0.5em 1em;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.stButton>button:hover {
-    transform: scale(1.05);
-    background: linear-gradient(90deg, #4f46e5, #7c3aed);
 }
 
 /* ===============================
-   📊 METRIC CARDS
+   📦 MAIN CONTENT AREA
 =============================== */
-[data-testid="stMetric"] {
-    background-color: #1f2937;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-    border: 1px solid #374151;
+[data-testid="stHeader"] {
+    background: transparent;
+}
+
+[data-testid="stToolbar"] {
+    background: transparent;
+}
+
+/* ===============================
+   📄 MAIN BLOCK (CONTENT)
+=============================== */
+.main {
+    background-color: #0e1117;
 }
 
 /* ===============================
@@ -64,19 +46,32 @@ section[data-testid="stSidebar"] {
 }
 
 /* ===============================
-   🔽 DROPDOWN FIX (NO BLUE)
+   🔘 BUTTONS
 =============================== */
-div[data-baseweb="select"] {
-    background-color: #1f2937 !important;
-    border-radius: 8px;
-    color: white !important;
+.stButton>button {
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 0.5em 1em;
 }
 
 /* ===============================
-   🎚 SLIDER
+   📊 METRIC CARDS
 =============================== */
-.stSlider > div > div {
-    color: #6366f1;
+[data-testid="stMetric"] {
+    background-color: #1f2937;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #374151;
+}
+
+/* ===============================
+   🔽 DROPDOWN FIX
+=============================== */
+div[data-baseweb="select"] {
+    background-color: #1f2937 !important;
+    color: white !important;
 }
 
 /* ===============================
@@ -86,40 +81,22 @@ details {
     background-color: #1f2937;
     border-radius: 10px;
     padding: 10px;
-    border: 1px solid #374151;
 }
 
 /* ===============================
-   📊 RADIO BUTTON (TABS)
+   📊 RADIO (TABS)
 =============================== */
-div[role="radiogroup"] {
-    gap: 10px;
-}
-
 div[role="radiogroup"] label {
     background-color: #1f2937;
-    padding: 8px 16px;
     border-radius: 8px;
-    border: 1px solid #374151;
-}
-
-div[role="radiogroup"] input:checked + div {
-    background: linear-gradient(90deg, #6366f1, #8b5cf6);
-    color: white;
+    padding: 8px 16px;
 }
 
 /* ===============================
-   📈 PLOTLY FIX (dark bg)
+   📈 PLOTLY BACKGROUND
 =============================== */
 .js-plotly-plot {
     background-color: #0e1117 !important;
-}
-
-/* ===============================
-   📌 HEADINGS
-=============================== */
-h1, h2, h3 {
-    color: #f9fafb;
 }
 
 </style>
