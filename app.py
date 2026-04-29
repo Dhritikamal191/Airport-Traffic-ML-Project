@@ -16,8 +16,8 @@ st.markdown("""
    🌙 GLOBAL DARK THEME
 =============================== */
 body {
-    background-color: #0e1117;
-    color: #ffffff;
+    background: rgba(31, 41, 55, 0.7);
+    backdrop-filter: blur(10px);
 }
 
 /* ===============================
@@ -123,6 +123,19 @@ h1, h2, h3 {
 }
 
 </style>
+""", unsafe_allow_html=True)
+
+st.markdown(f"""
+<div style="
+    background:#1f2937;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    border:1px solid #374151;
+">
+    <h3>✈️ Predicted Flights</h3>
+    <h1>{int(pred)}</h1>
+</div>
 """, unsafe_allow_html=True)
 
 # ===============================
