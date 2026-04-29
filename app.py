@@ -55,7 +55,7 @@ st.sidebar.header("Input Parameters")
 # ===============================
 # Date Controls
 # ===============================
-with st.sidebar.expander("?? Date Controls", expanded=True):
+with st.sidebar.expander("Date Controls", expanded=True):
     year = st.selectbox("Year", sorted(df['YEAR'].unique()))
     month = st.selectbox("Month", sorted(df['MONTH'].unique()))
     day = st.slider("Day", 1, 31, 15)
