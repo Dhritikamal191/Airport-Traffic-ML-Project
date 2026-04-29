@@ -203,7 +203,7 @@ with col1:
 
      fig = px.line(monthly,x='MONTH',y='FLT_TOT_1', markers=True,title="Monthly Average Flight Traffic")
 
-     fig.update_layout(xaxis_title="Month",yaxis_title="Average Flights",template="plotly_white")
+     fig.update_layout(xaxis_title="Month",yaxis_title="Average Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 
      st.plotly_chart(fig, use_container_width=True)
 
@@ -216,7 +216,7 @@ with col2:
      fig = px.bar(top_airports,x='APT_ICAO',y='FLT_TOT_1',
 title="Top 10 Busiest Airports",text_auto=True)
 
-     fig.update_layout(xaxis_title="Airport",yaxis_title="Total Flights",template="plotly_white")
+     fig.update_layout(xaxis_title="Airport",yaxis_title="Total Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 
      st.plotly_chart(fig, use_container_width=True)
 
@@ -263,20 +263,9 @@ if st.session_state.show_shap:
 
         shap_df = pd.DataFrame(shap_values_global, columns=feature_names)
 
-        global_importance = pd.DataFrame({
-            'Feature': feature_names,
-            'Importance': abs(shap_df).mean().values
-        }).sort_values(by='Importance', ascending=False)
+        global_importance = pd.DataFrame({'Feature': feature_names,'Importance': abs(shap_df).mean().values}).sort_values(by='Importance', ascending=False)
 
-        fig_global = px.bar(
-            global_importance.head(15),
-            x='Importance',
-            y='Feature',
-            orientation='h',
-            color='Importance',
-            color_continuous_scale='Blues',
-            title="Top Features (Global Impact)"
-        )
+        fig_global = px.bar(global_importance.head(15),x='Importance',y='Feature',orientation='h',color='Importance',color_continuous_scale='Blues',title="Top Features (Global Impact)")
 
         fig_global.update_layout(yaxis={'categoryorder':'total ascending'})
         st.plotly_chart(fig_global, use_container_width=True)
@@ -288,25 +277,11 @@ if st.session_state.show_shap:
 
         local_vals = shap_values[0]
 
-        waterfall_df = pd.DataFrame({
-            'Feature': feature_names,
-            'SHAP Value': local_vals
-        }).sort_values(by='SHAP Value', key=abs, ascending=False).head(10)
+        waterfall_df = pd.DataFrame({'Feature': feature_names,'SHAP Value': local_vals}).sort_values(by='SHAP Value', key=abs, ascending=False).head(10)
 
-        fig_waterfall = go.Figure(go.Bar(
-            x=waterfall_df['SHAP Value'],
-            y=waterfall_df['Feature'],
-            orientation='h',
-            marker=dict(
-                color=waterfall_df['SHAP Value'],
-                colorscale='RdBu'
-            )
-        ))
+        fig_waterfall = go.Figure(go.Bar(x=waterfall_df['SHAP Value'],y=waterfall_df['Feature'],orientation='h',marker=dict(color=waterfall_df['SHAP Value'],colorscale='RdBu')))
 
-        fig_waterfall.update_layout(
-            title="Feature Contribution (Positive vs Negative)",
-            yaxis={'categoryorder':'total ascending'}
-        )
+        fig_waterfall.update_layout(title="Feature Contribution (Positive vs Negative)",yaxis={'categoryorder':'total ascending'})
 
         st.plotly_chart(fig_waterfall, use_container_width=True)
 
@@ -322,15 +297,12 @@ if st.session_state.show_shap:
         feature_index = list(feature_names).index(interaction_feature)
         dependence_df = pd.DataFrame({'Feature Value': X_sample[:, feature_index],'SHAP Value': shap_values_global[:, feature_index],'Interaction Feature': X_sample[:, interaction_index]})
 
-        fig_dep = px.scatter(dependence_df,x='Feature Value',
-y='SHAP Value',color='Interaction Feature', color_continuous_scale='Viridis',title=f"Dependence Plot: {interaction_feature}",opacity=0.7,trendline="lowess")
+        fig_dep = px.scatter(dependence_df,x='Feature Value',y='SHAP Value',color='Interaction Feature', color_continuous_scale='Viridis',title=f"Dependence Plot: {interaction_feature}",opacity=0.7,trendline="lowess")
 
         # ===============================
         # LAYOUT IMPROVEMENTS
         # ===============================
-        fig_dep.update_layout(template="plotly_white",
-xaxis_title=f"{interaction_feature} Value",yaxis_title="SHAP Impact",coloraxis_colorbar=dict(title=interaction_feature),
-title_x=0.3)
+        fig_dep.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title=f"{interaction_feature} Value",yaxis_title="SHAP Impact",coloraxis_colorbar=dict(title=interaction_feature),title_x=0.3)
 
         # Better hover
         fig_dep.update_traces(marker=dict(size=6), hovertemplate="<b>Feature Value:</b> %{x}<br>" +"<b>SHAP Value:</b> %{y}<br>" +"<b>Interaction:</b> %{marker.color}<extra></extra>")
@@ -397,7 +369,7 @@ if st.button("Generate Forecast"):
     fig = px.line(future_df,x='MONTH',y='Predicted Flights',
 markers=True,title="Next 6 Months Flight Forecast")
 
-    fig.update_layout(xaxis_title="Month",yaxis_title= "Predicted Flights",template="plotly_white")
+    fig.update_layout(xaxis_title="Month",yaxis_title= "Predicted Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 
     st.plotly_chart(fig, use_container_width=True)
 
@@ -463,7 +435,7 @@ min_val = min(actual_vs_pred_df['Actual'].min(), actual_vs_pred_df['Predicted'].
 max_val = max(actual_vs_pred_df['Actual'].max(), actual_vs_pred_df['Predicted'].max())
 
 fig.add_shape(type="line",x0=min_val, y0=min_val,x1=max_val, y1=max_val,line=dict(dash="dash"))
-fig.update_layout(template="plotly_white",xaxis_title="Actual Flights",yaxis_title="Predicted Flights",title_x=0.3)
+fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Actual Flights",yaxis_title="Predicted Flights",title_x=0.3)
 
 fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"<b>Predicted:</b> %{y}<extra></extra>")
 st.plotly_chart(fig, use_container_width=True)
@@ -489,16 +461,8 @@ fig = px.line(
 # Add alert threshold
 threshold = actual_vs_pred_df['Error'].mean() * 1.5
 
-fig.add_hline(
-    y=threshold,
-    line_dash="dash",
-    annotation_text="Alert Threshold"
-)
+fig.add_hline(y=threshold,line_dash="dash",annotation_text="Alert Threshold")
 
-fig.update_layout(
-    template="plotly_white",
-    xaxis_title="Date",
-    yaxis_title="Error"
-)
+fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
 
 st.plotly_chart(fig, use_container_width=True)
