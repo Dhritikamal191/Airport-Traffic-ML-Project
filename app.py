@@ -197,21 +197,19 @@ st.subheader("Traffic Insights")
 col1, col2 = st.columns(2)
 
 with col1:
-     st.write("### Monthly Average Traffic")
-
+     
      monthly = df.groupby('MONTH')['FLT_TOT_1'].mean().reset_index()
-     fig = px.line(monthly,x='MONTH',y='FLT_TOT_1', markers=True,title="Monthly Average Flight Traffic")
-     fig.update_layout(xaxis_title="Month",yaxis_title="Average Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     fig = px.line(monthly,x='MONTH',y='FLT_TOT_1', markers=True)
+     fig.update_layout(xaxis_title="Month",yaxis_title="Monthly Average Flight Traffic",template="plotly_dark",title=dict(text="Monthly Average Traffic",x=0.5, xanchor="center",font=dict(size=17, color="white")),paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-     st.write("### Top 10 Airports")
-
+     
      top_airports = (df.groupby('APT_ICAO')['FLT_TOT_1'].sum().nlargest(10).reset_index())
-     fig = px.bar(top_airports,x='APT_ICAO',y='FLT_TOT_1',title="Top 10 Busiest Airports",text_auto=True)
-     fig.update_layout(xaxis_title="Airport",yaxis_title="Total Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     fig = px.bar(top_airports,x='APT_ICAO',y='FLT_TOT_1',text_auto=True)
+     fig.update_layout(xaxis_title="Airport",yaxis_title="Total Flights",title=dict(text="Top 10 Busiest Airports",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
@@ -261,9 +259,9 @@ if st.session_state.show_shap:
 
         global_importance = pd.DataFrame({'Feature': feature_names,'Importance': abs(shap_df).mean().values}).sort_values(by='Importance', ascending=False)
 
-        fig_global = px.bar(global_importance.head(15),x='Importance',y='Feature',orientation='h',color='Importance',color_continuous_scale='Blues',title="Top Features (Global Impact)")
+        fig_global = px.bar(global_importance.head(15),x='Importance',y='Feature',orientation='h',color='Importance',color_continuous_scale='Blues')
 
-        fig_global.update_layout(yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+        fig_global.update_layout(title=dict(text="Top Features (Global Impact)",x=0.5, xanchor="center",font=dict(size=17, color="white")),yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
         st.plotly_chart(fig_global, use_container_width=True)
 
         # ===============================
@@ -277,7 +275,7 @@ if st.session_state.show_shap:
 
         fig_waterfall = go.Figure(go.Bar(x=waterfall_df['SHAP Value'],y=waterfall_df['Feature'],orientation='h',marker=dict(color=waterfall_df['SHAP Value'],colorscale='RdBu')))
 
-        fig_waterfall.update_layout(title="Feature Contribution (Positive vs Negative)",yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+        fig_waterfall.update_layout(title=dict(text="Feature Contribution (Positive vs Negative)",x=0.5, xanchor="center",font=dict(size=17, color="white")),yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
         
         st.plotly_chart(fig_waterfall, use_container_width=True)
 
@@ -291,12 +289,12 @@ if st.session_state.show_shap:
         feature_index = list(feature_names).index(interaction_feature)
         dependence_df = pd.DataFrame({'Feature Value': X_sample[:, feature_index],'SHAP Value': shap_values_global[:, feature_index],'Interaction Feature': X_sample[:, interaction_index]})
 
-        fig_dep = px.scatter(dependence_df,x='Feature Value',y='SHAP Value',color='Interaction Feature', color_continuous_scale='Viridis',title=f"Dependence Plot: {interaction_feature}",opacity=0.7,trendline="lowess")
+        fig_dep = px.scatter(dependence_df,x='Feature Value',y='SHAP Value',color='Interaction Feature', color_continuous_scale='Viridis',opacity=0.7,trendline="lowess")
        
         # ===============================
         # LAYOUT IMPROVEMENTS
         # ===============================
-        fig_dep.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title=f"{interaction_feature} Value",yaxis_title="SHAP Impact",coloraxis_colorbar=dict(title=interaction_feature),title_x=0.3)
+        fig_dep.update_layout(title=dict(text=f"Dependence Plot: {interaction_feature}",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title=f"{interaction_feature} Value",yaxis_title="SHAP Impact",coloraxis_colorbar=dict(title=interaction_feature),title_x=0.3)
 
         # Better hover
         fig_dep.update_traces(marker=dict(size=6), hovertemplate="<b>Feature Value:</b> %{x}<br>" +"<b>SHAP Value:</b> %{y}<br>" +"<b>Interaction:</b> %{marker.color}<extra></extra>")
@@ -362,7 +360,7 @@ if st.button("Generate Forecast"):
     # PLOT
     # ===============================
     fig = px.line(future_df,x='MONTH',y='Predicted Flights',markers=True,title="Next 6 Months Flight Forecast")
-    fig.update_layout(xaxis_title="Month",yaxis_title= "Predicted Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+    fig.update_layout(title=dict(text="Next 6 Months Flight Forecast",x=0.5, xanchor="center",font=dict(size=17, color="white")),xaxis_title="Month",yaxis_title= "Predicted Flights",template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
     fig.update_xaxes(showgrid=False)
     fig.update_yaxes(showgrid=False)
     st.plotly_chart(fig, use_container_width=True)
@@ -376,8 +374,8 @@ st.subheader("IFR vs Total Flights Comparison")
 
 ifr_df = df.groupby(['APT_ICAO','MONTH'])[['FLT_TOT_1','FLT_TOT_IFR_2']].mean().reset_index()
 
-fig = px.line(ifr_df,x='MONTH',y=['FLT_TOT_1','FLT_TOT_IFR_2'],markers=True,title="IFR vs Total Flights (Monthly)")
-fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+fig = px.line(ifr_df,x='MONTH',y=['FLT_TOT_1','FLT_TOT_IFR_2'],markers=True)
+fig.update_layout(title=dict(text="IFR vs Total Flights (Monthly)",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 fig.update_xaxes(showgrid=False)
 fig.update_yaxes(showgrid=False)
 st.plotly_chart(fig, use_container_width=True)
@@ -389,8 +387,8 @@ with col1:
 
      state_df = df.groupby('STATE_NAME')['FLT_TOT_1'].sum().nlargest(10).reset_index()
 
-     fig = px.bar(state_df,x='STATE_NAME',y='FLT_TOT_1',title= "Top States by Traffic",text_auto=True)
-     fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     fig = px.bar(state_df,x='STATE_NAME',y='FLT_TOT_1',text_auto=True)
+     fig.update_layout(title=dict(text="Top States by Traffic",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
@@ -403,7 +401,7 @@ with col2:
      week_df['Type'] = week_df['IS_WEEKEND'].map({0:'Weekday',1:'Weekend'})
 
      fig = px.bar(week_df,x='Type',y='FLT_TOT_1',title="Weekend vs Weekday Traffic")
-     fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     fig.update_layout(title=dict(text="Weekend vs Weekday Traffic",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
@@ -413,7 +411,7 @@ st.subheader("Heatmap (Day vs Month)")
 heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
 
 fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Year vs Month)")
-fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+fig.update_layout(title=dict(text="Traffic Heat Map (Year vs Month)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 st.plotly_chart(fig, use_container_width=True)
 
 X = df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
@@ -426,19 +424,19 @@ actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
 
 actual_vs_pred_df.rename(columns={'FLT_TOT_1': 'Actual'}, inplace=True)
 
-fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",title="Actual vs Predicted (Model Performance)",opacity=0.6)
+fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",opacity=0.6)
 # Add perfect prediction line
 min_val = min(actual_vs_pred_df['Actual'].min(), actual_vs_pred_df['Predicted'].min())
 max_val = max(actual_vs_pred_df['Actual'].max(), actual_vs_pred_df['Predicted'].max())
 fig.add_shape(type="line",x0=min_val, y0=min_val,x1=max_val, y1=max_val,line=dict(dash="dash"))
-fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Actual Flights",yaxis_title="Predicted Flights",title_x=0.3)
+fig.update_layout(title=dict(text="Actual vs Predicted (Model Performance)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Actual Flights",yaxis_title="Predicted Flights",title_x=0.3)
 fig.update_xaxes(showgrid=False)
 fig.update_yaxes(showgrid=False)
 fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"<b>Predicted:</b> %{y}<extra></extra>")
 st.plotly_chart(fig, use_container_width=True)
 
-fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'],title="Prediction Monitoring Over Time")
-fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'])
+fig.update_layout(title=dict(text="Prediction Monitoring Over Time",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 fig.update_xaxes(showgrid=False)
 fig.update_yaxes(showgrid=False)
 st.plotly_chart(fig, use_container_width=True)
@@ -457,7 +455,7 @@ threshold = actual_vs_pred_df['Error'].mean() * 1.5
 
 fig.add_hline(y=threshold,line_dash="dash",annotation_text="Alert Threshold")
 
-fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
+fig.update_layout(title=dict(text="Error Trend Monitoring",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
 fig.update_xaxes(showgrid=False)
 fig.update_yaxes(showgrid=False)
 st.plotly_chart(fig, use_container_width=True)
