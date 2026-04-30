@@ -475,8 +475,6 @@ st.plotly_chart(fig, use_container_width=True)
 col1,col2=st.columns(2)
 
 with col1:
-     st.subheader("State-wise Traffic Distribution")
-
      state_df = df.groupby('STATE_NAME')['FLT_TOT_1'].sum().nlargest(10).reset_index()
 
      fig = px.bar(state_df,x='STATE_NAME',y='FLT_TOT_1',text_auto=True)
@@ -486,16 +484,12 @@ with col1:
      st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-     st.subheader("Weekend vs Weekly Traffic")
-
      week_df = df.groupby('IS_WEEKEND')['FLT_TOT_1'].mean().reset_index()
+     week_df['Type'] = week_df['IS_WEEKEND'].map({0: 'Weekday', 1: 'Weekend'})
+     fig = px.pie(week_df,names='Type',values='FLT_TOT_1',hole=0.5)
+     fig.update_traces(textinfo='percent+label',hovertemplate="<b>%{label}</b><br>Flights: %{value:.0f}<br>Share: %{percent}")
+     fig.update_layout(title=dict(text="Weekend vs Weekday Traffic",x=0.5,xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",legend=dict(orientation="h",y=-0.1))
 
-     week_df['Type'] = week_df['IS_WEEKEND'].map({0:'Weekday',1:'Weekend'})
-
-     fig = px.bar(week_df,x='Type',y='FLT_TOT_1',title="Weekend vs Weekday Traffic")
-     fig.update_layout(title=dict(text="Weekend vs Weekday Traffic",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
-     fig.update_xaxes(showgrid=False)
-     fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("Heatmap (Day vs Month)")
