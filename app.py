@@ -521,27 +521,21 @@ fig.update_yaxes(showgrid=False)
 fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"<b>Predicted:</b> %{y}<extra></extra>")
 st.plotly_chart(fig, use_container_width=True)
 
-fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'])
-fig.update_layout(title=dict(text="Prediction Monitoring Over Time",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
-fig.update_xaxes(showgrid=False)
-fig.update_yaxes(showgrid=False)
-st.plotly_chart(fig, use_container_width=True)
-
-actual_vs_pred_df['Error'] = abs(actual_vs_pred_df['Actual'] - actual_vs_pred_df['Predicted'])
-
-error_trend = actual_vs_pred_df.groupby(actual_vs_pred_df['FLT_DATE'].dt.month)['Error'].mean().reset_index()
-
-# Rolling mean
-actual_vs_pred_df['Rolling_Error'] = actual_vs_pred_df['Error'].rolling(5).mean()
-
-fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Error', 'Rolling_Error'],title="Error Trend Monitoring")
-
-# Add alert threshold
-threshold = actual_vs_pred_df['Error'].mean() * 1.5
-
-fig.add_hline(y=threshold,line_dash="dash",annotation_text="Alert Threshold")
-
-fig.update_layout(title=dict(text="Error Trend Monitoring",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
-fig.update_xaxes(showgrid=False)
-fig.update_yaxes(showgrid=False)
-st.plotly_chart(fig, use_container_width=True)
+col1, col2=st.columns(2)
+with col1:
+     fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'])
+     fig.update_layout(title=dict(text="Prediction Monitoring Over Time",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     fig.update_xaxes(showgrid=False)
+     fig.update_yaxes(showgrid=False)
+     st.plotly_chart(fig, use_container_width=True)
+with col2:
+     actual_vs_pred_df['Error'] = abs(actual_vs_pred_df['Actual'] - actual_vs_pred_df['Predicted'])
+     error_trend = actual_vs_pred_df.groupby(actual_vs_pred_df['FLT_DATE'].dt.month)['Error'].mean().reset_index()
+     actual_vs_pred_df['Rolling_Error'] = actual_vs_pred_df['Error'].rolling(5).mean()
+     fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Error', 'Rolling_Error'],title="Error Trend Monitoring")
+     threshold = actual_vs_pred_df['Error'].mean() * 1.5
+     fig.add_hline(y=threshold,line_dash="dash",annotation_text="Alert Threshold")
+     fig.update_layout(title=dict(text="Error Trend Monitoring",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
+     fig.update_xaxes(showgrid=False)
+     fig.update_yaxes(showgrid=False)
+     st.plotly_chart(fig, use_container_width=True)
