@@ -73,8 +73,6 @@ st.markdown("""
    📊 METRIC CARDS (FIX TEXT)
 =============================== */
 [data-testid="stMetric"] {
-    background: linear-gradient(135deg, #1f2937, #111827);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     background-color: #1f2937;
     border-radius: 12px;
     padding: 15px;
@@ -127,6 +125,79 @@ details summary {
 =============================== */
 div[role="radiogroup"] label {
     color: #e5e7eb !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+
+/* ===============================
+   🔤 FIX INPUT BOX VISIBILITY
+=============================== */
+input, textarea {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+    border-radius: 8px !important;
+    border: 1px solid #374151 !important;
+}
+
+/* ===============================
+   🔽 SELECTBOX (DROPDOWN)
+=============================== */
+div[data-baseweb="select"] {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+    border-radius: 8px !important;
+    border: 1px solid #374151 !important;
+}
+
+/* Dropdown text */
+div[data-baseweb="select"] span {
+    color: #f9fafb !important;
+}
+
+/* Dropdown menu items */
+ul[role="listbox"] li {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* ===============================
+   🎚 SLIDER FIX
+=============================== */
+.stSlider label {
+    color: #e5e7eb !important;
+}
+
+/* ===============================
+   📋 SIDEBAR TEXT VISIBILITY
+=============================== */
+section[data-testid="stSidebar"] * {
+    color: #f9fafb !important;
+}
+
+/* ===============================
+   📦 REMOVE WHITE INPUT BACKGROUND BUG
+=============================== */
+div[data-testid="stTextInput"] input {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+}
+
+/* ===============================
+   📅 NUMBER INPUT FIX
+=============================== */
+div[data-testid="stNumberInput"] input {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+}
+
+/* ===============================
+   ✨ PLACEHOLDER TEXT
+=============================== */
+input::placeholder {
+    color: #9ca3af !important;
 }
 
 </style>
