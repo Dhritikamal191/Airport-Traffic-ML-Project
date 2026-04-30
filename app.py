@@ -13,195 +13,78 @@ st.markdown("""
 <style>
 
 /* ===============================
-   🌙 MAIN APP BACKGROUND FIX
+   🌙 MAIN BACKGROUND
 =============================== */
 [data-testid="stAppViewContainer"] {
-    background-color: #0e1117;
-    color: white;
-}
-
-/* ===============================
-   📦 MAIN CONTENT AREA
-=============================== */
-[data-testid="stHeader"] {
-    background: transparent;
-}
-
-[data-testid="stToolbar"] {
-    background: transparent;
-}
-
-/* ===============================
-   📄 MAIN BLOCK (CONTENT)
-=============================== */
-.main {
-    background-color: #0e1117;
+    background-color: #0e1117 !important;
 }
 
 /* ===============================
    📌 SIDEBAR
 =============================== */
 section[data-testid="stSidebar"] {
-    background-color: #111827;
+    background-color: #111827 !important;
 }
 
 /* ===============================
-   🔘 BUTTONS
+   🔤 FORCE INPUT STYLING (KEY FIX)
 =============================== */
-.stButton>button {
-    background: linear-gradient(90deg, #6366f1, #8b5cf6);
-    color: white;
-    border-radius: 10px;
-    border: none;
-    padding: 0.5em 1em;
-}
 
-/* ===============================
-   📈 PLOTLY BACKGROUND
-=============================== */
-.js-plotly-plot {
-    background-color: #0e1117 !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-
-/* ===============================
-   📊 METRIC CARDS (FIX TEXT)
-=============================== */
-[data-testid="stMetric"] {
-    background-color: #1f2937;
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid #374151;
-}
-
-[data-testid="stMetric"] label {
-    color: #9ca3af !important;   /* subtitle */
-}
-
-[data-testid="stMetric"] div {
-    color: #f9fafb !important;   /* main value */
-}
-/* ===============================
-   🔽 SELECTBOX / DROPDOWN TEXT FIX
-=============================== */
-div[data-baseweb="select"] * {
-    color: #f9fafb !important;
-}
-
-/* Dropdown menu options */
-ul[role="listbox"] li {
-    color: #111827 !important;   /* dark text for white dropdown */
-}
-
-/* ===============================
-   🎚 SLIDER LABELS
-=============================== */
-label {
-    color: #e5e7eb !important;
-}
-
-/* ===============================
-   🔤 INPUT BOXES (TEXT INPUT / NUMBER)
-=============================== */
-input {
+/* Text + Number Inputs */
+div[data-testid="stTextInput"] input,
+div[data-testid="stNumberInput"] input {
+    background-color: #1f2937 !important;
     color: #ffffff !important;
+    border: 1px solid #374151 !important;
+    border-radius: 8px !important;
+}
+
+/* Selectbox */
+div[data-baseweb="select"] > div {
     background-color: #1f2937 !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+}
+
+/* Selected value text */
+div[data-baseweb="select"] span {
+    color: #ffffff !important;
+}
+
+/* Dropdown menu */
+ul[role="listbox"] {
+    background-color: #ffffff !important;
+}
+
+/* Dropdown items */
+ul[role="listbox"] li {
+    color: #000000 !important;
 }
 
 /* ===============================
-   📋 EXPANDER TEXT
+   🏷 LABELS (VERY IMPORTANT)
 =============================== */
-details summary {
-    color: #f9fafb !important;
-}
-
-/* ===============================
-   📊 RADIO BUTTON TEXT
-=============================== */
-div[role="radiogroup"] label {
+label, .stSelectbox label, .stNumberInput label {
     color: #e5e7eb !important;
 }
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
 
 /* ===============================
-   🔤 FIX INPUT BOX VISIBILITY
-=============================== */
-input, textarea {
-    background-color: #1f2937 !important;
-    color: #f9fafb !important;
-    border-radius: 8px !important;
-    border: 1px solid #374151 !important;
-}
-
-/* ===============================
-   🔽 SELECTBOX (DROPDOWN)
-=============================== */
-div[data-baseweb="select"] {
-    background-color: #1f2937 !important;
-    color: #f9fafb !important;
-    border-radius: 8px !important;
-    border: 1px solid #374151 !important;
-}
-
-/* Dropdown text */
-div[data-baseweb="select"] span {
-    color: #f9fafb !important;
-}
-
-/* Dropdown menu items */
-ul[role="listbox"] li {
-    background-color: white !important;
-    color: black !important;
-}
-
-/* ===============================
-   🎚 SLIDER FIX
+   🎚 SLIDER
 =============================== */
 .stSlider label {
     color: #e5e7eb !important;
 }
 
 /* ===============================
-   📋 SIDEBAR TEXT VISIBILITY
+   📊 METRIC TEXT FIX
 =============================== */
-section[data-testid="stSidebar"] * {
+[data-testid="stMetric"] * {
     color: #f9fafb !important;
-}
-
-/* ===============================
-   📦 REMOVE WHITE INPUT BACKGROUND BUG
-=============================== */
-div[data-testid="stTextInput"] input {
-    background-color: #1f2937 !important;
-    color: #f9fafb !important;
-}
-
-/* ===============================
-   📅 NUMBER INPUT FIX
-=============================== */
-div[data-testid="stNumberInput"] input {
-    background-color: #1f2937 !important;
-    color: #f9fafb !important;
-}
-
-/* ===============================
-   ✨ PLACEHOLDER TEXT
-=============================== */
-input::placeholder {
-    color: #9ca3af !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
+
 
 # ===============================
 # CONFIG
