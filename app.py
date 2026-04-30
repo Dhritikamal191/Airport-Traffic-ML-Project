@@ -194,42 +194,6 @@ header {
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <style>
-    /* 1. Target the Dropdown Popover Menu */
-    div[data-baseweb="popover"], div[data-baseweb="menu"] {
-        background-color: #1E1E1E !important; /* Dark background */
-        border: 1px solid #50C878 !important; /* Emerald border */
-    }
-
-    /* 2. Style the individual options in the list */
-    div[data-baseweb="menu"] li {
-        background-color: #1E1E1E !important;
-        color: white !important; /* Ensure text is not dark-on-dark */
-    }
-
-    /* 3. Hover state for options */
-    div[data-baseweb="menu"] li:hover {
-        background-color: #50C878 !important; /* Emerald hover */
-        color: black !important;
-    }
-
-    /* 4. Fix the Selectbox Input field (The red border issue) */
-    div[data-baseweb="select"] > div {
-        background-color: #1E1E1E !important;
-        border-color: #50C878 !important;
-        color: white !important;
-    }
-
-    /* 5. Slider: Keep only the track green */
-    div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
-        background-color: #50C878 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # ===============================
 # CONFIG
