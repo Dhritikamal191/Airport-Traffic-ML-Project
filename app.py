@@ -159,6 +159,41 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+
+/* ===============================
+   🔝 REMOVE WHITE TOP BAR
+=============================== */
+
+/* Header background */
+[data-testid="stHeader"] {
+    background: #0e1117 !important;
+}
+
+/* Toolbar (settings/share icons area) */
+[data-testid="stToolbar"] {
+    background: #0e1117 !important;
+}
+
+/* Entire top block */
+[data-testid="stDecoration"] {
+    background: #0e1117 !important;
+}
+
+/* Optional: hide header completely */
+[data-testid="stHeader"] {
+    visibility: visible;   /* change to hidden if you want to remove it */
+}
+
+/* Remove shadow line */
+header {
+    box-shadow: none !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 # ===============================
 # CONFIG
 # ===============================
