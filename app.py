@@ -488,7 +488,7 @@ with col2:
      week_df['Type'] = week_df['IS_WEEKEND'].map({0: 'Weekday', 1: 'Weekend'})
      fig = px.pie(week_df,names='Type',values='FLT_TOT_1',hole=0.5)
      fig.update_traces(textinfo='percent+label',hovertemplate="<b>%{label}</b><br>Flights: %{value:.0f}<br>Share: %{percent}")
-     fig.update_layout(title=dict(text="Weekend vs Weekday Traffic",x=0.5,xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",legend=dict(orientation="h",y=-0.1))
+     fig.update_layout(title=dict(text="Weekend vs Weekday Traffic",x=0.5,xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",legend=dict(font=dict(color="white"),orientation="h",y=-0.1))
 
      st.plotly_chart(fig, use_container_width=True)
 
