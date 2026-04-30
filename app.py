@@ -195,6 +195,38 @@ header {
 """, unsafe_allow_html=True)
 
 
+import streamlit as st
+
+st.markdown(
+    """
+    <style>
+    /* 1. Target the floating menu container */
+    div[data-baseweb="popover"] ul {
+        background-color: #1E1E1E !important; /* Dark background for the list */
+        border: 1px solid #50C878 !important; /* Emerald border */
+    }
+
+    /* 2. Style the individual list items (the ICAO codes) */
+    div[data-baseweb="popover"] li {
+        background-color: #1E1E1E !important;
+        color: #FFFFFF !important; /* Force text to white */
+    }
+
+    /* 3. Style the item when you hover over it */
+    div[data-baseweb="popover"] li:hover {
+        background-color: #50C878 !important; /* Emerald highlight */
+        color: #000000 !important; /* Black text on hover for contrast */
+    }
+
+    /* 4. Ensure the slider track stays green without the bubble changing */
+    div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
+        background-color: #50C878 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ===============================
 # CONFIG
 # ===============================
