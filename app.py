@@ -260,6 +260,13 @@ st.markdown(
     div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
         background-color: #50C878 !important;
     }
+
+    /* 6. Fix the white background on Expanders (Airport Info, etc.) */
+    div[data-testid="stExpander"] details summary {
+        background-color: #1E1E1E !important;
+        color: white !important;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
     </style>
     """,
     unsafe_allow_html=True
