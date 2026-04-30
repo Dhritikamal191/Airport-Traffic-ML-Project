@@ -227,6 +227,44 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.markdown(
+    """
+    <style>
+    /* 1. REMOVE THE RED BORDER on the selectbox when clicked */
+    div[data-baseweb="select"] > div {
+        border-color: #50C878 !important; /* Forces your emerald green */
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    /* 2. TARGET THE DROPDOWN LIST (The Popover) */
+    /* This handles the background of the entire floating menu */
+    div[data-baseweb="popover"] > div {
+        background-color: #1E1E1E !important;
+        border: 1px solid #50C878 !important;
+    }
+
+    /* 3. STYLE THE LIST ITEMS (ICAO Codes) */
+    div[data-baseweb="popover"] li {
+        background-color: #1E1E1E !important;
+        color: white !important;
+    }
+
+    /* 4. STYLE THE HOVER STATE (When you move your mouse over codes) */
+    div[data-baseweb="popover"] li:hover {
+        background-color: #50C878 !important;
+        color: black !important;
+    }
+
+    /* 5. SLIDER FIX: Keep track green, don't touch the value bubble */
+    div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
+        background-color: #50C878 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ===============================
 # CONFIG
 # ===============================
