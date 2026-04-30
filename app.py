@@ -57,7 +57,20 @@ section[data-testid="stSidebar"] {
 }
 
 /* ===============================
-   📊 METRIC CARDS
+   📈 PLOTLY BACKGROUND
+=============================== */
+.js-plotly-plot {
+    background-color: #0e1117 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+
+/* ===============================
+   📊 METRIC CARDS (FIX TEXT)
 =============================== */
 [data-testid="stMetric"] {
     background-color: #1f2937;
@@ -66,37 +79,53 @@ section[data-testid="stSidebar"] {
     border: 1px solid #374151;
 }
 
+[data-testid="stMetric"] label {
+    color: #9ca3af !important;   /* subtitle */
+}
+
+[data-testid="stMetric"] div {
+    color: #f9fafb !important;   /* main value */
+}
+
 /* ===============================
-   🔽 DROPDOWN FIX
+   🔽 SELECTBOX / DROPDOWN TEXT FIX
 =============================== */
-div[data-baseweb="select"] {
+div[data-baseweb="select"] * {
+    color: #f9fafb !important;
+}
+
+/* Dropdown menu options */
+ul[role="listbox"] li {
+    color: #111827 !important;   /* dark text for white dropdown */
+}
+
+/* ===============================
+   🎚 SLIDER LABELS
+=============================== */
+label {
+    color: #e5e7eb !important;
+}
+
+/* ===============================
+   🔤 INPUT BOXES (TEXT INPUT / NUMBER)
+=============================== */
+input {
+    color: #ffffff !important;
     background-color: #1f2937 !important;
-    color: white !important;
 }
 
 /* ===============================
-   📋 EXPANDER
+   📋 EXPANDER TEXT
 =============================== */
-details {
-    background-color: #1f2937;
-    border-radius: 10px;
-    padding: 10px;
+details summary {
+    color: #f9fafb !important;
 }
 
 /* ===============================
-   📊 RADIO (TABS)
+   📊 RADIO BUTTON TEXT
 =============================== */
 div[role="radiogroup"] label {
-    background-color: #1f2937;
-    border-radius: 8px;
-    padding: 8px 16px;
-}
-
-/* ===============================
-   📈 PLOTLY BACKGROUND
-=============================== */
-.js-plotly-plot {
-    background-color: #0e1117 !important;
+    color: #e5e7eb !important;
 }
 
 </style>
