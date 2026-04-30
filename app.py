@@ -194,44 +194,6 @@ header {
 </style>
 """, unsafe_allow_html=True)
 
-
-st.markdown(
-    """
-    <style>
-    /* 1. FORCE REMOVE RED BORDER: Targets the wrapper and the focused state */
-    div[data-baseweb="select"] > div, 
-    div[data-baseweb="select"]:focus-within > div {
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        outline: none !important;
-        box-shadow: none !important;
-    }
-
-    /* 2. SLIDER TRACK: Emerald green track only */
-    div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
-        background-color: #50C878 !important;
-    }
-
-    /* 3. SLIDER HANDLE: Matching emerald green */
-    div[data-testid="stSlider"] [role="slider"] {
-        background-color: #50C878 !important;
-        box-shadow: 0 0 5px rgba(80, 200, 120, 0.5) !important;
-    }
-
-    /* 4. VALUE BUBBLE: Ensuring it stays standard/hidden-background */
-    div[data-testid="stThumbValue"] {
-        background-color: transparent !important;
-        border: none !important;
-    }
-    
-    /* 5. INPUT TEXT: Fixes visibility issues in dark themes */
-    div[data-baseweb="select"] [data-testid="stMarkdownContainer"] p {
-        color: white !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # ===============================
 # CONFIG
 # ===============================
