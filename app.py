@@ -85,6 +85,79 @@ label, .stSelectbox label, .stNumberInput label {
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+
+/* ===============================
+   🔘 BUTTON FIX (VISIBLE + PREMIUM)
+=============================== */
+.stButton > button {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    color: white !important;
+    border-radius: 10px !important;
+    border: none !important;
+    padding: 0.6em 1.2em !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(99,102,241,0.4);
+}
+
+.stButton > button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+
+/* ===============================
+   🧾 HEADINGS FIX
+=============================== */
+h1, h2, h3 {
+    color: #f9fafb !important;
+    font-weight: 600;
+}
+
+/* Subtext */
+p, span {
+    color: #d1d5db !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+
+/* ===============================
+   📦 CARD SYSTEM
+=============================== */
+.card {
+    background: #1f2937;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #374151;
+    margin-bottom: 20px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+
+/* ===============================
+   📐 SPACING FIX
+=============================== */
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # ===============================
 # CONFIG
