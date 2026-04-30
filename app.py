@@ -87,6 +87,10 @@ st.markdown("""
     color: #f9fafb !important;   /* main value */
 }
 
+[data-testid="stMetric"] {
+    background: linear-gradient(135deg, #1f2937, #111827);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
 /* ===============================
    🔽 SELECTBOX / DROPDOWN TEXT FIX
 =============================== */
