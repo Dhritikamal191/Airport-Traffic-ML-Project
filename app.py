@@ -194,38 +194,6 @@ header {
 </style>
 """, unsafe_allow_html=True)
 
-
-# Custom CSS to override the red borders and style the slider
-st.markdown(
-    """
-    <style>
-    /* 1. Remove red border from Selectbox when focused/active */
-    div[data-baseweb="select"] > div {
-        border-color: rgba(255, 255, 255, 0.2) !important;
-        box-shadow: none !important;
-    }
-
-    /* 2. Style the Slider track to Emerald Green */
-    div[data-baseweb="slider"] > div > div {
-        background: linear-gradient(to right, #50C878 0%, #50C878 var(--progress), #333 var(--progress)) !important;
-    }
-
-    /* 3. Style the Slider Handle */
-    div[role="slider"] {
-        background-color: #50C878 !important;
-        border: 2px solid white !important;
-    }
-
-    /* 4. Keep the value bubble (tooltip) neutral/default */
-    div[data-testid="stThumbValue"] {
-        background-color: transparent !important;
-        color: white !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # ===============================
 # CONFIG
 # ===============================
