@@ -197,52 +197,6 @@ header {
 st.markdown("""
 <style>
 
-/* ===============================
-   🔽 DROPDOWN MENU (OPEN LIST) FIX
-=============================== */
-
-/* Entire dropdown menu */
-ul[role="listbox"] {
-    background-color: #1f2937 !important;
-    border-radius: 8px !important;
-    border: 1px solid #374151 !important;
-}
-
-/* Each option */
-ul[role="listbox"] li {
-    background-color: #1f2937 !important;
-    color: #f9fafb !important;
-}
-
-/* Hover effect */
-ul[role="listbox"] li:hover {
-    background-color: #374151 !important;
-    color: white !important;
-}
-
-/* Selected item */
-ul[role="listbox"] li[aria-selected="true"] {
-    background-color: #6366f1 !important;
-    color: white !important;
-}
-
-/* ===============================
-   🔽 SELECTBOX INPUT (TOP PART)
-=============================== */
-div[data-baseweb="select"] > div {
-    background-color: #1f2937 !important;
-    color: white !important;
-}
-
-/* ===============================
-   🔤 TEXT INSIDE SELECTBOX
-=============================== */
-div[data-baseweb="select"] span {
-    color: white !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
 # ===============================
 # CONFIG
 # ===============================
