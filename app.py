@@ -251,11 +251,6 @@ st.markdown(
         color: black !important;
     }
 
-    /* 5. SLIDER FIX: Keep track green, don't touch the value bubble */
-    div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
-        background-color: #50C878 !important;
-    }
-
     /* 6. Fix the white background on Expanders (Airport Info, etc.) */
     div[data-testid="stExpander"] details summary {
         background-color: #1E1E1E !important;
