@@ -217,11 +217,6 @@ st.markdown(
         background-color: #50C878 !important; /* Emerald highlight */
         color: #000000 !important; /* Black text on hover for contrast */
     }
-
-    /* 4. Ensure the slider track stays green without the bubble changing */
-    div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
-        background-color: #50C878 !important;
-    }
     </style>
     """,
     unsafe_allow_html=True
