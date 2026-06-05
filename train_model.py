@@ -44,12 +44,24 @@ X = df[[
     'DEP_ARR_RATIO', 'IFR_RATIO'
 ]]
 
-# ===============================
-# ?? SPLIT
-# ===============================
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+# Ensure date is datetime
+df["FLT_DATE"] = pd.to_datetime(df["FLT_DATE"])
+
+# Sort chronologically
+df = df.sort_values("FLT_DATE")
+
+# Create features and target
+X = df[feature_cols]
+y = df["FLT_TOT_1"]
+
+# Time-based split
+split_idx = int(len(df) * 0.8)
+
+X_train = X.iloc[:split_idx]
+X_test = X.iloc[split_idx:]
+
+y_train = y.iloc[:split_idx]
+y_test = y.iloc[split_idx:]
 
 # ===============================
 # ?? PREPROCESSOR
