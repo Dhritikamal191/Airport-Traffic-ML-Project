@@ -553,3 +553,85 @@ with tab5:
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
+
+with tab6:
+     reference = df[df['YEAR'] <= 2023]
+     current = df[df['YEAR'] >= 2024]
+     ref_avg = reference['FLT_TOT_1'].mean()
+     curr_avg = current['FLT_TOT_1'].mean()
+     drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
+
+     st.metric(
+     "Traffic Drift %",
+     f"{drift_pct:.2f}%",
+     delta=f"{drift_pct:.2f}%"
+     )
+     
+     airport_dist = (
+    df.groupby(['YEAR','APT_NAME'])['FLT_TOT_1']
+      .sum()
+      .reset_index()
+)
+
+     fig = px.area(
+    airport_dist,
+    x='YEAR',
+    y='FLT_TOT_1',
+    color='APT_NAME',
+    title="Airport Traffic Distribution Drift"
+)
+
+     st.plotly_chart(fig, use_container_width=True)
+
+     state_drift = (
+    df.groupby('STATE_NAME')['FLT_TOT_1']
+      .mean()
+      .sort_values(ascending=False)
+      .head(15)
+)
+
+     fig = px.bar(
+    state_drift,
+    title="State Traffic Drift"
+)
+
+     df['IFR_RATIO'] = (
+    df['FLT_TOT_IFR_2'] /
+    df['FLT_TOT_1']
+)  
+
+     reference['IFR_RATIO'].mean()
+current['IFR_RATIO'].mean()
+
+     st.metric(
+    "IFR Ratio Drift",
+    f"{curr_ifr:.2%}",
+    delta=f"{(curr_ifr-ref_ifr):.2%}"
+)
+
+     monthly = (
+    df.groupby(['YEAR','MONTH_NUM'])
+      ['FLT_TOT_1']
+      .mean()
+      .reset_index()
+)
+
+     fig = px.line(
+    monthly,
+    x='MONTH_NUM',
+    y='FLT_TOT_1',
+    color='YEAR',
+    title="Seasonality Drift"
+)
+
+     st.plotly_chart(fig, use_container_width=True)       
+
+     if abs(drift_pct) < 5:
+        risk = "🟢 Stable"
+
+     elif abs(drift_pct) < 15:
+          risk = "🟡 Moderate Drift"
+
+     else:
+          risk = "🔴 Significant Drift"
+     
