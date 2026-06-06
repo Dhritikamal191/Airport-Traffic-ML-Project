@@ -515,27 +515,27 @@ with tab4:
           fig.update_layout(title=dict(text="Weekend vs Weekday Traffic",x=0.5,xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",legend=dict(font=dict(color="white"),orientation="h",y=-0.1))
           st.plotly_chart(fig, use_container_width=True)
 
-          col1, col2=st.columns(2)
-          with col1:
-               heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
-               fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Year vs Month)")
-               fig.update_layout(title=dict(text="Traffic Heat Map (Year vs Month)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
-               st.plotly_chart(fig, use_container_width=True)
-          with col2:
-               X = df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
-               y = df['FLT_TOT_1']
-               df['Predicted'] = model.predict(X)
-               actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
-               actual_vs_pred_df.rename(columns={'FLT_TOT_1': 'Actual'}, inplace=True)
-               fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",opacity=0.6)
-               min_val = min(actual_vs_pred_df['Actual'].min(), actual_vs_pred_df['Predicted'].min())
-               max_val = max(actual_vs_pred_df['Actual'].max(), actual_vs_pred_df['Predicted'].max())
-               fig.add_shape(type="line",x0=min_val, y0=min_val,x1=max_val, y1=max_val,line=dict(dash="dash"))
-               fig.update_layout(title=dict(text="Actual vs Predicted (Model Performance)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Actual Flights",yaxis_title="Predicted Flights",title_x=0.3)
-               fig.update_xaxes(showgrid=False)
-               fig.update_yaxes(showgrid=False)
-               fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"<b>Predicted:</b> %{y}<extra></extra>")
-               st.plotly_chart(fig, use_container_width=True)
+     col1, col2=st.columns(2)
+     with col1:
+          heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
+          fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Year vs Month)")
+          fig.update_layout(title=dict(text="Traffic Heat Map (Year vs Month)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+          st.plotly_chart(fig, use_container_width=True)
+     with col2:
+          X = df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
+          y = df['FLT_TOT_1']
+          df['Predicted'] = model.predict(X)
+          actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
+          actual_vs_pred_df.rename(columns={'FLT_TOT_1': 'Actual'}, inplace=True)
+          fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",opacity=0.6)
+          min_val = min(actual_vs_pred_df['Actual'].min(), actual_vs_pred_df['Predicted'].min())
+          max_val = max(actual_vs_pred_df['Actual'].max(), actual_vs_pred_df['Predicted'].max())
+          fig.add_shape(type="line",x0=min_val, y0=min_val,x1=max_val, y1=max_val,line=dict(dash="dash"))
+          fig.update_layout(title=dict(text="Actual vs Predicted (Model Performance)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Actual Flights",yaxis_title="Predicted Flights",title_x=0.3)
+          fig.update_xaxes(showgrid=False)
+          fig.update_yaxes(showgrid=False)
+          fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"<b>Predicted:</b> %{y}<extra></extra>")
+          st.plotly_chart(fig, use_container_width=True)
 with tab5:
      fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'])
      fig.update_layout(title=dict(text="Prediction Monitoring Over Time",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
