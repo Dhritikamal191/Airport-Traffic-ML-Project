@@ -591,13 +591,13 @@ with tab6:
      )
 
      fig = px.bar(
-    state_drift,
-    title="State Traffic Drift"
+     state_drift,
+     title="State Traffic Drift"
      )
 
      df['IFR_RATIO'] = (
-    df['FLT_TOT_IFR_2'] /
-    df['FLT_TOT_1']
+     df['FLT_TOT_IFR_2'] /
+     df['FLT_TOT_1']
      )  
 
      reference['IFR_RATIO'].mean()
@@ -610,7 +610,7 @@ current['IFR_RATIO'].mean()
      )
 
      monthly = (
-    df.groupby(['YEAR','MONTH_NUM'])
+     df.groupby(['YEAR','MONTH_NUM'])
       ['FLT_TOT_1']
       .mean()
       .reset_index()
