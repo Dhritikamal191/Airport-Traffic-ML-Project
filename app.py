@@ -565,6 +565,7 @@ with tab6:
      st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
      airport_dist = (df.groupby(['YEAR','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
      fig = px.area(airport_dist,x='YEAR',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift")
+     fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
      fig = px.bar(state_drift,title="State Traffic Drift")
@@ -575,6 +576,7 @@ with tab6:
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
      monthly = (df.groupby(['YEAR','MONTH_NUM'])['FLT_TOT_1'].mean().reset_index())
      fig = px.line(monthly,x='MONTH_NUM',y='FLT_TOT_1',color='YEAR',title="Seasonality Drift")
+     fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)       
      if abs(drift_pct) < 5:
         risk = "🟢 Stable"
