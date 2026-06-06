@@ -352,7 +352,7 @@ if st.button("Predict Traffic"):
 # ===============================
 # INSIGHTS
 # ===============================
-tab1, tab2, tab3, tab4, tab5=st.tabs(["Traffic Insights","Model Explanation","Future Forecast","Traffic Scenarios","Monitoring"])
+tab1, tab2, tab3, tab4, tab5, tab6=st.tabs(["Traffic Insights","Model Explanation","Future Forecast","Traffic Scenarios","Monitoring","Drift"])
 with tab1:
      st.subheader("Traffic Insights")
      col1, col2 = st.columns(2)
@@ -571,15 +571,15 @@ with tab6:
     df.groupby(['YEAR','APT_NAME'])['FLT_TOT_1']
       .sum()
       .reset_index()
-)
+     )
 
      fig = px.area(
-    airport_dist,
-    x='YEAR',
-    y='FLT_TOT_1',
-    color='APT_NAME',
-    title="Airport Traffic Distribution Drift"
-)
+     airport_dist,
+     x='YEAR',
+     y='FLT_TOT_1',
+     color='APT_NAME',
+     title="Airport Traffic Distribution Drift"
+     )
 
      st.plotly_chart(fig, use_container_width=True)
 
@@ -588,41 +588,41 @@ with tab6:
       .mean()
       .sort_values(ascending=False)
       .head(15)
-)
+     )
 
      fig = px.bar(
     state_drift,
     title="State Traffic Drift"
-)
+     )
 
      df['IFR_RATIO'] = (
     df['FLT_TOT_IFR_2'] /
     df['FLT_TOT_1']
-)  
+     )  
 
      reference['IFR_RATIO'].mean()
 current['IFR_RATIO'].mean()
 
      st.metric(
-    "IFR Ratio Drift",
-    f"{curr_ifr:.2%}",
-    delta=f"{(curr_ifr-ref_ifr):.2%}"
-)
+     "IFR Ratio Drift",
+     f"{curr_ifr:.2%}",
+     delta=f"{(curr_ifr-ref_ifr):.2%}"
+     )
 
      monthly = (
     df.groupby(['YEAR','MONTH_NUM'])
       ['FLT_TOT_1']
       .mean()
       .reset_index()
-)
+     )
 
      fig = px.line(
-    monthly,
-    x='MONTH_NUM',
-    y='FLT_TOT_1',
-    color='YEAR',
-    title="Seasonality Drift"
-)
+     monthly,
+     x='MONTH_NUM',
+     y='FLT_TOT_1',
+     color='YEAR',
+     title="Seasonality Drift"
+     )
 
      st.plotly_chart(fig, use_container_width=True)       
 
