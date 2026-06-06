@@ -564,11 +564,11 @@ with tab6:
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
      st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
      airport_dist = (df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
-     fig = px.line(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift")
+     fig = px.scatter(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
-     fig = px.bar(state_drift,title="State Traffic Drift")
+     fig = px.line(state_drift,title="State Traffic Drift")
      fig.update_layout(font=dict(size=17, color="white"),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1']+1)  
