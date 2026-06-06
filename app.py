@@ -549,7 +549,7 @@ with tab5:
      fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Error', 'Rolling_Error'],title="Error Trend Monitoring")
      threshold = actual_vs_pred_df['Error'].mean() * 1.5
      fig.add_hline(y=threshold,line_dash="dash",annotation_text="Alert Threshold")
-     fig.update_layout(title=dict(text="Error Trend Monitoring",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
+     fig.update_layout(title=dict(text="Error Trend Monitoring",x=0.5,xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title="Date",yaxis_title="Error")
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      st.plotly_chart(fig, use_container_width=True)
@@ -564,18 +564,20 @@ with tab6:
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
      st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
      airport_dist = (df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
-     fig = px.area(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift")
+     fig = px.line(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
-     fig = px.bar(state_drift,title="State Traffic Drift")
+     fig = px.area(state_drift,title="State Traffic Drift")
+     fig.update_layout(xanchor="center",font=dict(size=17, color="white"),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     st.plotly_chart(fig, use_container_width=True)
      df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1']+1)  
      ref_ifr = reference['IFR_RATIO'].mean()
      curr_ifr = current['IFR_RATIO'].mean()
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
      ifr_trend= (df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
-     fig = px.bar(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month")
+     fig = px.area(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)       
      if abs(drift_pct) < 5:
