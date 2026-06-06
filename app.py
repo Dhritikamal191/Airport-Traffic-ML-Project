@@ -563,8 +563,8 @@ with tab6:
      curr_avg = current['FLT_TOT_1'].mean()
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
      st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
-     airport_dist = (df.groupby(['YEAR','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
-     fig = px.area(airport_dist,x='YEAR',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift")
+     airport_dist = (df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
+     fig = px.area(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
@@ -574,8 +574,8 @@ with tab6:
      curr_ifr = current['IFR_RATIO'].mean()
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
-     ifr_trend= (df.groupby("YEAR")["IFR_RATIO"].mean().reset_index())
-     fig = px.line(ifr_trend,x='YEAR',y='IFR_RATIO',color='YEAR',markers=True,title="Year over Year Growth by Month")
+     ifr_trend= (df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
+     fig = px.line(ifr_trend,x='MONTH',y='IFR_RATIO',color='YEAR',markers=True,title="Year over Year Growth by Month")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)       
      if abs(drift_pct) < 5:
