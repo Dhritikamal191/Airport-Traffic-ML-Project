@@ -555,8 +555,10 @@ with tab5:
      st.plotly_chart(fig, use_container_width=True)
 
 with tab6:
-     reference = df[df['YEAR'] <= 2023]
-     current = df[df['YEAR'] >= 2024]
+     df = df.sort_values("FLT_DATE")
+     split_idx = int(len(df) * 0.7)
+     reference = df.iloc[:split_idx]
+     current = df.iloc[split_idx:]
      ref_avg = reference['FLT_TOT_1'].mean()
      curr_avg = current['FLT_TOT_1'].mean()
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
