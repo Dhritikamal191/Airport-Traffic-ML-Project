@@ -560,13 +560,7 @@ with tab6:
      ref_avg = reference['FLT_TOT_1'].mean()
      curr_avg = current['FLT_TOT_1'].mean()
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
-
-     st.metric(
-     "Traffic Drift %",
-     f"{drift_pct:.2f}%",
-     delta=f"{drift_pct:.2f}%"
-     )
-     
+    
      airport_dist = (
     df.groupby(['YEAR','APT_NAME'])['FLT_TOT_1']
       .sum()
