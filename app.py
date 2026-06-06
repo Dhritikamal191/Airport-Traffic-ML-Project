@@ -574,7 +574,7 @@ with tab6:
      curr_ifr = current['IFR_RATIO'].mean()
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
-     ifr_trend= (df.groupby("Year")["IFR_RATIO"].mean().reset_index())
+     ifr_trend= (df.groupby("YEAR")["IFR_RATIO"].mean().reset_index())
      fig = px.line(ifr_trend,x='YEAR',y='IFR_RATIO',color='YEAR',markers=True,title="Year over Year Growth by Month")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)       
