@@ -580,7 +580,7 @@ with tab6:
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
      ifr_trend= (df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
-     fig = px.line(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month",color_continuous_scale="Virdirs")
+     fig = px.scatter(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month",color_continuous_scale="Virdirs")
      fig.update_traces(marker=dict(size=40, line=dict(width=0,color="rgba(255,255,255,0.4)"))) 
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
