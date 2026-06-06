@@ -562,7 +562,7 @@ with tab6:
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
      st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
      airport_dist = (df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
-     fig = px.scatter(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift", color_continuous_scale="Turbo")
+     fig = px.scatter(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift", color_continuous_scale="Virdirs")
      fig.update_traces(marker=dict(size=10, line=dict(width=2,color="rgba(255,255,255,0.4)")))
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
@@ -580,7 +580,7 @@ with tab6:
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
      ifr_trend= (df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
-     fig = px.scatter(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month",color_continuous_scale="Turbo")
+     fig = px.scatter(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month",color_continuous_scale="Plasma")
      fig.update_traces(marker=dict(size=16, line=dict(width=2,color="rgba(255,255,255,0.4)")))
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
