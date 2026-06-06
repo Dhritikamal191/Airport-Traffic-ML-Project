@@ -567,8 +567,9 @@ with tab6:
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
      fig = px.bar(state_drift,title="State Traffic Drift")
      df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1'])  
-     reference['IFR_RATIO'].mean()
-     current['IFR_RATIO'].mean()
+     ref_ifr = reference['IFR_RATIO'].mean()
+     curr_ifr = current['IFR_RATIO'].mean()
+     ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
      monthly = (df.groupby(['YEAR','MONTH_NUM'])['FLT_TOT_1'].mean().reset_index())
      fig = px.line(monthly,x='MONTH_NUM',y='FLT_TOT_1',color='YEAR',title="Seasonality Drift")
