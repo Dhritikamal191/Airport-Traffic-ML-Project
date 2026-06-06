@@ -574,9 +574,8 @@ with tab6:
      curr_ifr = current['IFR_RATIO'].mean()
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
-     monthly = (df.groupby(['YEAR','MONTH_NUM'])['FLT_TOT_1'].mean().reset_index())
-     monthly["YoY_Growth"] = (monthly.groupby("MONTH_NUM")["FLT_TOT_1"].pct_change() * 100)
-     fig = px.line(monthly,x='MONTH_NUM',y='YoY_Growth',color='YEAR',markers=True,title="Year over Year Growth by Month")
+     ifr_trend= (df.groupby("Year")["IFR_RATIO"].mean().reset_index())
+     fig = px.line(ifr_trend,x='YEAR',y='IFR_RATIO',color='YEAR',markers=True,title="Year over Year Growth by Month")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)       
      if abs(drift_pct) < 5:
