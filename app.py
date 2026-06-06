@@ -493,7 +493,7 @@ with tab3:
         st.subheader("IFR vs Total Flights Comparison")
         ifr_df = df.groupby(['APT_ICAO','MONTH'])[['FLT_TOT_1','FLT_TOT_IFR_2']].mean().reset_index()
         fig = px.scatter(ifr_df,x='MONTH',y=['FLT_TOT_1','FLT_TOT_IFR_2'],color_continuous_scale="Plasma")
-        fig.update_traces(marker=dict(size=40, line=dict(width=0,color="rgba(255,255,255,0.4)"))) 
+        fig.update_traces(marker=dict(size=15, line=dict(width=0,color="rgba(255,255,255,0.4)"))) 
         fig.update_layout(title=dict(text="IFR vs Total Flights (Monthly)",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
         fig.update_xaxes(showgrid=False)
         fig.update_yaxes(showgrid=False)
