@@ -568,7 +568,7 @@ with tab6:
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
-     fig = px.area(state_drift,title="State Traffic Drift")
+     fig = px.bar(state_drift,title="State Traffic Drift")
      fig.update_layout(font=dict(size=17, color="white"),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1']+1)  
@@ -577,7 +577,7 @@ with tab6:
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
      ifr_trend= (df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
-     fig = px.area(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month")
+     fig = px.scatter(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month")
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)       
      if abs(drift_pct) < 5:
