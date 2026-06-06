@@ -569,7 +569,7 @@ with tab6:
      st.plotly_chart(fig, use_container_width=True)
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
      fig = px.bar(state_drift,title="State Traffic Drift")
-     df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1'])  
+     df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1']+1)  
      ref_ifr = reference['IFR_RATIO'].mean()
      curr_ifr = current['IFR_RATIO'].mean()
      ifr_drift = curr_ifr - ref_ifr
