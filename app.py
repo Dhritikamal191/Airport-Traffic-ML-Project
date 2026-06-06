@@ -560,9 +560,15 @@ with tab6:
      ref_avg = reference['FLT_TOT_1'].mean()
      curr_avg = current['FLT_TOT_1'].mean()
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
-    
+     
+     st.metric(
+     "Traffic Drift %",
+     f"{drift_pct:.2f}%",
+     delta=f"{drift_pct:.2f}%"
+     )
+
      airport_dist = (
-    df.groupby(['YEAR','APT_NAME'])['FLT_TOT_1']
+     df.groupby(['YEAR','APT_NAME'])['FLT_TOT_1']
       .sum()
       .reset_index()
      )
@@ -578,7 +584,7 @@ with tab6:
      st.plotly_chart(fig, use_container_width=True)
 
      state_drift = (
-    df.groupby('STATE_NAME')['FLT_TOT_1']
+     df.groupby('STATE_NAME')['FLT_TOT_1']
       .mean()
       .sort_values(ascending=False)
       .head(15)
