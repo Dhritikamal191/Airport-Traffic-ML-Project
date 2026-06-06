@@ -352,7 +352,7 @@ if st.button("Predict Traffic"):
 # ===============================
 # INSIGHTS
 # ===============================
-tab1,tab2,tab33,tab4,tab5=st.tabs[("Traffic Insights","Model Explanation","Future Forecast","Traffic Scenarios","Monitoring")]
+tab1, tab2, tab3, tab4, tab5=st.tabs(["Traffic Insights","Model Explanation","Future Forecast","Traffic Scenarios","Monitoring"])
 with tab1:
      st.subheader("Traffic Insights")
      col1, col2 = st.columns(2)
