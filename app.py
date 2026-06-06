@@ -569,7 +569,7 @@ with tab6:
      st.plotly_chart(fig, use_container_width=True)
      state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
      fig = px.area(state_drift,title="State Traffic Drift")
-     fig.update_layout(xanchor="center",font=dict(size=17, color="white"),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
+     fig.update_layout(font=dict(size=17, color="white"),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1']+1)  
      ref_ifr = reference['IFR_RATIO'].mean()
