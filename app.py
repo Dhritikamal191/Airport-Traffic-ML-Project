@@ -518,14 +518,14 @@ with tab4:
           fig.update_yaxes(showgrid=False)
           st.plotly_chart(fig, use_container_width=True)
      with col2:
-          week_df = df.groupby('IS_WEEKEND')['FLT_TOT_1'].mean().reset_index()
+          week_df = filtered_df.groupby('IS_WEEKEND')['FLT_TOT_1'].mean().reset_index()
           week_df['Type'] = week_df['IS_WEEKEND'].map({0: 'Weekday', 1: 'Weekend'})
           fig = px.pie(week_df,names='Type',values='FLT_TOT_1',hole=0.5)
           fig.update_traces(textinfo='percent+label',hovertemplate="<b>%{label}</b><br>Flights: %{value:.0f}<br>Share: %{percent}")
           fig.update_layout(title=dict(text="Weekend vs Weekday Traffic",x=0.5,xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",legend=dict(font=dict(color="white"),orientation="h",y=-0.1))
           st.plotly_chart(fig, use_container_width=True)
      
-     heat_df = df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
+     heat_df = filtered_df.pivot_table(values='FLT_TOT_1',index='MONTH', columns='DAY',aggfunc='mean')
      fig = px.imshow(heat_df,aspect="auto",title="Traffic Heatmap (Month vs Day)")
      fig.update_layout(title=dict(text="Traffic Heat Map (Year vs Month)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
