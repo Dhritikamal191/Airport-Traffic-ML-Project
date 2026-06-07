@@ -563,33 +563,33 @@ with tab5:
      st.plotly_chart(fig, use_container_width=True)
 
 with tab6:
-     df = df.sort_values("FLT_DATE")
+     filtered_df = df.sort_values("FLT_DATE")
      split_idx = int(len(df) * 0.7)
-     reference = df.iloc[:split_idx]
-     current = df.iloc[split_idx:]
+     reference = filtered_df.iloc[:split_idx]
+     current = filtered_df.iloc[split_idx:]
      ref_avg = reference['FLT_TOT_1'].mean()
      curr_avg = current['FLT_TOT_1'].mean()
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
      st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
-     airport_dist = (df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
+     airport_dist = (filtered_df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
      fig = px.scatter(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift", color_continuous_scale="Turbo")
      fig.update_traces(marker=dict(size=15, line=dict(width=0,color="rgba(255,255,255,0.4)")))
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)") 
      st.plotly_chart(fig, use_container_width=True)
-     state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
+     state_drift = (filtered_df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
      fig = px.line(state_drift,title="State Traffic Drift")
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
-     df['IFR_RATIO'] = (df['FLT_TOT_IFR_2'] / df['FLT_TOT_1']+1)  
+     filtered_df['IFR_RATIO'] = (filtered_df['FLT_TOT_IFR_2'] / filtered_df['FLT_TOT_1']+1)  
      ref_ifr = reference['IFR_RATIO'].mean()
      curr_ifr = current['IFR_RATIO'].mean()
      ifr_drift = curr_ifr - ref_ifr
      st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
-     ifr_trend= (df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
+     ifr_trend= (filtered_df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
      fig = px.scatter(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month", color_continuous_scale="Plasma")
      fig.update_traces(marker=dict(size=40, line=dict(width=0,color="rgba(255,255,255,0.4)"))) 
      fig.update_xaxes(showgrid=False)
