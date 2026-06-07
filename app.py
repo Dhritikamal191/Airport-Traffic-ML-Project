@@ -612,7 +612,7 @@ with tab6:
      monthly['Growth_%'] = monthly['FLT_TOT_1'].pct_change() * 100
 
      airport_share = (
-     df.groupby('APT_ICAO')['FLT_TOT_1']
+     filtered_df.groupby('APT_ICAO')['FLT_TOT_1']
       .sum()
       .reset_index()
      )
