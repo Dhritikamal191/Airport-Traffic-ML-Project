@@ -355,9 +355,13 @@ filtered_df = df.copy()
 
 # State Filter
 if state != "All":
-    filtered_df = filtered_df[
+   filtered_df = filtered_df[
         filtered_df["STATE_NAME"] == state
-    ]
+   ]
+
+if day != "All":
+   filtered_df = filtered_df [filtered_df["DAY"] == day
+   ]
 
 # ===============================
 # INSIGHTS
