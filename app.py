@@ -653,22 +653,27 @@ with tab6:
      'IFR_RATIO'
      ]
 
-     corr_matrix = filtered_df[corr_cols].corr()
+     corr_matrix = filtered_df[corr_cols].corr().round(2)
 
      fig = px.imshow(
      corr_matrix,
-     text_auto=".2f",
-     aspect="auto",
-     color_continuous_scale="RdBu_r",
-     title="✈️ Airport Traffic Correlation Heatmap"
+     text_auto=True,
+     color_continuous_scale="Turbo",
+     zmin=-1,
+     zmax=1,
+     aspect="auto"
      )
 
      fig.update_layout(
+     title={
+        "text":"📊 Flight Operations Correlation Matrix",
+        "x":0.5,
+        "font":{"size":22}
+     },
      template="plotly_dark",
-     height=700,
-     title=dict(
-        x=0.5,
-        font=dict(size=20)
+     height=750,
+     coloraxis_colorbar=dict(
+        title="Correlation"
      ),
      paper_bgcolor="rgba(0,0,0,0)",
      plot_bgcolor="rgba(0,0,0,0)"
