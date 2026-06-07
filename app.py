@@ -570,6 +570,8 @@ with tab6:
      ref_avg = reference['FLT_TOT_1'].mean()
      curr_avg = current['FLT_TOT_1'].mean()
      drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
+     if np.isnan(drift_pct) or np.isinf(drift_pct):
+        drift = 0
      st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
      airport_dist = (filtered_df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
      fig = px.scatter(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift", color_continuous_scale="Turbo")
