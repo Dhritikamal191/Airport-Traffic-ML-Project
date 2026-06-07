@@ -349,6 +349,33 @@ if st.button("Predict Traffic"):
     col1.metric("Predicted Flights", int(pred))
     col2.metric("Selected Month", month)
     col3.metric("Airport", airport)
+
+filtered_df = df.copy()
+
+# Airport Filter
+if airport_filter != "All":
+    filtered_df = filtered_df[
+        filtered_df["APT_ICAO"] == airport_filter
+    ]
+
+# State Filter
+if state_filter != "All":
+    filtered_df = filtered_df[
+        filtered_df["STATE_NAME"] == state_filter
+    ]
+
+# Month Filter
+if month_filter != "All":
+    filtered_df = filtered_df[
+        filtered_df["MONTH"] == month_filter
+    ]
+
+# Weekday Filter
+if weekday_filter != "All":
+    filtered_df = filtered_df[
+        filtered_df["WEEKDAY"] == weekday_filter
+    ]
+
 # ===============================
 # INSIGHTS
 # ===============================
@@ -357,14 +384,14 @@ with tab1:
      st.subheader("Traffic Insights")
      col1, col2 = st.columns(2)
      with col1:     
-          monthly = df.groupby('MONTH')['FLT_TOT_1'].mean().reset_index()
+          monthly = filtered_df.groupby('MONTH')['FLT_TOT_1'].mean().reset_index()
           fig = px.line(monthly,x='MONTH',y='FLT_TOT_1', markers=True)
           fig.update_layout(xaxis_title="Month",yaxis_title="Monthly Average Flight Traffic",template="plotly_dark",title=dict(text="Monthly Average Traffic",x=0.5, xanchor="center",font=dict(size=17, color="white")),paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
           fig.update_xaxes(showgrid=False)
           fig.update_yaxes(showgrid=False)
           st.plotly_chart(fig, use_container_width=True)
      with col2:     
-          top_airports = (df.groupby('APT_ICAO')['FLT_TOT_1'].sum().nlargest(10).reset_index())
+          top_airports = (filtered_df.groupby('APT_ICAO')['FLT_TOT_1'].sum().nlargest(10).reset_index())
           fig = px.bar(top_airports,x='APT_ICAO',y='FLT_TOT_1',text_auto=True)
           fig.update_layout(xaxis_title="Airport",yaxis_title="Total Flights",title=dict(text="Top 10 Busiest Airports",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
           fig.update_xaxes(showgrid=False)
