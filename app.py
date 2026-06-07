@@ -368,14 +368,21 @@ st.markdown("""
 st.set_page_config(page_title="Airport Traffic Dashboard", layout="wide")
 
 st.markdown("""
-<div class="header-box">
-    <div class="header-title">
-        ✈️ Airport Traffic Forecasting & Analytics
-    </div>
+<div style="
+background: #1e293b;
+padding: 20px;
+border-radius: 15px;
+text-align: center;
+">
 
-     <div class="header-subtitle">
-         Machine Learning • Forecasting • SHAP Explainability • Monitoring
-     </div>
+<h1 style="color:white;">
+✈️ Airport Traffic Forecasting & Analytics
+</h1>
+
+<p style="color:#cbd5e1;">
+Machine Learning • Forecasting • SHAP Explainability • Monitoring
+</p>
+
 </div>
 """, unsafe_allow_html=True)
 
