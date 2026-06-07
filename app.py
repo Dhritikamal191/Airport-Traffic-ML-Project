@@ -565,17 +565,28 @@ with tab5:
 
 with tab6:
      filtered_df = filtered_df.sort_values("FLT_DATE")
-     split_idx = int(len(df) * 0.7)
+     split_idx = len(filtered_df) // 2
+
      reference = filtered_df.iloc[:split_idx]
      current = filtered_df.iloc[split_idx:]
+
      ref_avg = reference['FLT_TOT_1'].mean()
      curr_avg = current['FLT_TOT_1'].mean()
-     if ref_avg == 0:
-        drift_pct = 0
+
+     if (
+        pd.isna(ref_avg)
+        or pd.isna(curr_avg)
+        or ref_avg == 0
+        ):
+          drift_pct = 0
      else:
-          drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
-     
-     st.metric("Traffic Drift %",f"{drift_pct:.2f}%",delta=f"{drift_pct:.2f}%")
+     drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
+
+     st.metric(
+     "Traffic Drift %",
+     f"{drift_pct:.2f}%",
+     delta=f"{drift_pct:.2f}%"
+     )
      airport_dist = (filtered_df.groupby(['MONTH','APT_NAME'])['FLT_TOT_1'].sum().reset_index())
      fig = px.scatter(airport_dist,x='MONTH',y='FLT_TOT_1',color='APT_NAME',title="Airport Traffic Distribution Drift", color_continuous_scale="Turbo")
      fig.update_traces(marker=dict(size=15, line=dict(width=0,color="rgba(255,255,255,0.4)")))
@@ -592,8 +603,18 @@ with tab6:
      filtered_df['IFR_RATIO'] = (filtered_df['FLT_TOT_IFR_2'] / filtered_df['FLT_TOT_1']+1)  
      ref_ifr = reference['IFR_RATIO'].mean()
      curr_ifr = current['IFR_RATIO'].mean()
-     ifr_drift = curr_ifr - ref_ifr
-     st.metric("IFR Ratio Drift",f"{curr_ifr:.2%}",delta=f"{(curr_ifr-ref_ifr):.2%}")
+
+     if pd.isna(ref_ifr) or pd.isna(curr_ifr):
+        ifr_drift = 0
+        curr_ifr = 0
+     else:
+          ifr_drift = curr_ifr - ref_ifr
+
+     st.metric(
+     "IFR Ratio Drift",
+     f"{curr_ifr:.2%}",
+     delta=f"{ifr_drift:.2%}"
+     )
      ifr_trend= (filtered_df.groupby("MONTH")["IFR_RATIO"].mean().reset_index())
      fig = px.scatter(ifr_trend,x='MONTH',y='IFR_RATIO',color='MONTH',title="Growth by Month", color_continuous_scale="Plasma")
      fig.update_traces(marker=dict(size=40, line=dict(width=0,color="rgba(255,255,255,0.4)"))) 
