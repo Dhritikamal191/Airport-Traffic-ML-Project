@@ -355,25 +355,25 @@ filtered_df = df.copy()
 # Airport Filter
 if airport != "All":
     filtered_df = filtered_df[
-        filtered_df["APT_ICAO"] == airport_filter
+        filtered_df["APT_ICAO"] == airport
     ]
 
 # State Filter
 if state != "All":
     filtered_df = filtered_df[
-        filtered_df["STATE_NAME"] == state_filter
+        filtered_df["STATE_NAME"] == state
     ]
 
 # Month Filter
 if month != "All":
     filtered_df = filtered_df[
-        filtered_df["MONTH"] == month_filter
+        filtered_df["MONTH"] == month
     ]
 
 # Weekday Filter
 if weekday != "All":
     filtered_df = filtered_df[
-        filtered_df["WEEKDAY"] == weekday_filter
+        filtered_df["WEEKDAY"] == weekday
     ]
 
 # ===============================
