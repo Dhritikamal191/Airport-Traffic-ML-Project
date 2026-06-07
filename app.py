@@ -353,25 +353,25 @@ if st.button("Predict Traffic"):
 filtered_df = df.copy()
 
 # Airport Filter
-if airport_filter != "All":
+if airport != "All":
     filtered_df = filtered_df[
         filtered_df["APT_ICAO"] == airport_filter
     ]
 
 # State Filter
-if state_filter != "All":
+if state != "All":
     filtered_df = filtered_df[
         filtered_df["STATE_NAME"] == state_filter
     ]
 
 # Month Filter
-if month_filter != "All":
+if month != "All":
     filtered_df = filtered_df[
         filtered_df["MONTH"] == month_filter
     ]
 
 # Weekday Filter
-if weekday_filter != "All":
+if weekday != "All":
     filtered_df = filtered_df[
         filtered_df["WEEKDAY"] == weekday_filter
     ]
