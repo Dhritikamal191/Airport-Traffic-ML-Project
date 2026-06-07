@@ -569,7 +569,8 @@ with tab4:
      
      X = filtered_df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
      y = filtered_df['FLT_TOT_1']
-     df['Predicted'] = model.predict(X)
+     X_filtered = filtered_df[feature_cols]
+     filtered_df['Predicted'] = model.predict(X_filtered)
      actual_vs_pred_df = filtered_df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
      actual_vs_pred_df.rename(columns={'FLT_TOT_1': 'Actual'}, inplace=True)
      fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",opacity=0.6)
