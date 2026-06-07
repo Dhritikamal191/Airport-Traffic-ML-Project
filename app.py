@@ -567,8 +567,8 @@ with tab4:
      fig.update_layout(title=dict(text="Traffic Heat Map (Year vs Month)",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      st.plotly_chart(fig, use_container_width=True)
      
-     X = filtered_df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
-     y = filtered_df['FLT_TOT_1']    
+     X = df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
+     y = df['FLT_TOT_1']    
      df['Predicted'] = model.predict(X)
      actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
      actual_vs_pred_df.rename(columns={'FLT_TOT_1': 'Actual'}, inplace=True)
