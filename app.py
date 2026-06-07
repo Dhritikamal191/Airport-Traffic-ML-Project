@@ -374,7 +374,7 @@ st.markdown("""
     </div>
 
     <div class="header-subtitle">
-        Machine Learning • Forecasting • SHAP Explainability • Monitoring
+     <p>Machine Learning • Forecasting • SHAP Explainability • Monitoring</p>
     </div>
 </div>
 """, unsafe_allow_html=True)
