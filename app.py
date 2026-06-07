@@ -458,10 +458,6 @@ if day != "All":
    filtered_df = filtered_df [filtered_df["DAY"] == day
    ]
 
-if dep_arr_ratio != "All":
-   filtered_df = filtered_df [filtered_df["DAY"] == dep_arr_ratio 
-   ]
-
 st.subheader("Prediction")
 
 if st.button("Predict Traffic"):
