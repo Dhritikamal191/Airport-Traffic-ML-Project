@@ -263,12 +263,121 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.markdown("""
+<style>
+
+.header-box {
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b,
+        #2563eb
+    );
+    
+    padding: 30px;
+    border-radius: 18px;
+
+    text-align: center;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.35);
+
+    margin-bottom: 25px;
+}
+
+.header-title {
+    color: white;
+    font-size: 38px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.header-subtitle {
+    color: #cbd5e1;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+
+.kpi-card {
+    background: linear-gradient(
+        145deg,
+        rgba(30,41,59,0.95),
+        rgba(15,23,42,0.95)
+    );
+
+    padding: 20px;
+    border-radius: 16px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.30);
+
+    transition: all 0.3s ease;
+
+    text-align: center;
+}
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 20px rgba(37,99,235,0.25);
+}
+
+.kpi-title {
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.kpi-value {
+    color: white;
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 8px;
+}
+
+.kpi-delta-positive {
+    color: #22c55e;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.kpi-delta-negative {
+    color: #ef4444;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 # ===============================
 # CONFIG
 # ===============================
 st.set_page_config(page_title="Airport Traffic Dashboard", layout="wide")
 
-st.title("Airport Traffic Forecasting and Analytics Dashboard")
+st.markdown("""
+<div class="header-box">
+    <div class="header-title">
+        ✈️ Airport Traffic Forecasting & Analytics
+    </div>
+
+    <div class="header-subtitle">
+        Machine Learning • Forecasting • SHAP Explainability • Monitoring
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # ===============================
 # LOAD MODEL
@@ -345,11 +454,45 @@ st.subheader("Prediction")
 if st.button("Predict Traffic"):
     pred = model.predict(input_df)[0]
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+         st.markdown(f"""
+         <div class="kpi-card">
+          <div class="kpi-title">Total Flights</div>
+          <div class="kpi-value">{total_flights:,.0f}</div>
+          <div class="kpi-delta-positive">▲ 4.2%</div>
+         </div>
+         """, unsafe_allow_html=True)
 
-    col1.metric("Predicted Flights", int(pred))
-    col2.metric("Selected Month", month)
-    col3.metric("Airport", airport)
+     with col2:
+          st.markdown(f"""
+          <div class="kpi-card">
+           <div class="kpi-title">Predicted Flights</div>
+           <div class="kpi-value">{int(pred)}</div>
+           <div class="kpi-delta-positive">▲ 2.8%</div>
+          </div>
+          """, unsafe_allow_html=True)
+filtered_df = df.copy()
+
+with col3:
+    st.markdown(f"""
+    <div class="kpi-card">
+        <div class="kpi-title">Airport</div>
+        <div class="kpi-value">{airport}</div>
+        <div class="kpi-delta-positive">▲ 2.8%</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    st.markdown(f"""
+    <div class="kpi-card">
+        <div class="kpi-title">Predicted Flights</div>
+        <div class="kpi-value">{int(pred)}</div>
+        <div class="kpi-delta-positive">▲ 2.8%</div>
+    </div>
+    """, unsafe_allow_html=True)
+filtered_df = df.copy()
 
 filtered_df = df.copy()
 
