@@ -358,14 +358,6 @@ if state != "All":
         filtered_df["STATE_NAME"] == state
     ]
 
-if weekday != "All":
-    filtered_df = filtered_df[
-        filtered_df["WEEKDAY"] == weekday
-    ]
-
-if day != "All":
-   filtered_df =filtered_df [filtered_df ["DAY"] == day
-]
 # ===============================
 # INSIGHTS
 # ===============================
