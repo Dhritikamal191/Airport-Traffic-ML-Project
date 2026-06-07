@@ -580,7 +580,7 @@ with tab6:
         ):
           drift_pct = 0
      else:
-     drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
+          drift_pct = ((curr_avg - ref_avg) / ref_avg) * 100
 
      st.metric(
      "Traffic Drift %",
