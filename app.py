@@ -456,9 +456,9 @@ if st.button("Predict Traffic"):
 
     col1, col2, col3, col4 = st.columns(4)
     
-     with col1:
-          st.markdown(f"""
-          <div class="kpi-card">
+    with col1:
+         st.markdown(f"""
+         <div class="kpi-card">
           <div class="kpi-title">Total Flights</div>
           <div class="kpi-value">{total_flights:,.0f}</div>
           <div class="kpi-delta-positive">▲ 4.2%</div>
