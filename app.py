@@ -503,7 +503,7 @@ if st.button("Predict Traffic"):
           st.markdown(f"""
           <div class="kpi-card">
            <div class="kpi-title">Total IFR Flights</div>
-           <div class="kpi-value">{total_ifr:,0.f}</div>
+           <div class="kpi-value">{total_ifr}</div>
            <div class="kpi-delta-positive">▲ 2.8%</div>
           </div>
           """, unsafe_allow_html=True)
