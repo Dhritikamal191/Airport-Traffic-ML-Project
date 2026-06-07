@@ -452,9 +452,9 @@ input_df = pd.DataFrame({
 st.subheader("Prediction")
 
 if st.button("Predict Traffic"):
-    pred = model.predict(input_df)[0]
+     pred = model.predict(input_df)[0]
 
-    col1, col2, col3, col4 = st.columns(4)
+     col1, col2, col3, col4 = st.columns(4)
     
      with col1:
           st.markdown(f"""
