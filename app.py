@@ -303,7 +303,12 @@ df = load_data()
 
 feature_cols = [
     'YEAR',
-    'MONTH_NUM',
+    'MONTH',
+    'DAY'
+    'DEP_ARR_RATIO'
+    'IS_WEEKEND'
+    'IFR_RATIO'
+    'WEEKDAY'
     'APT_ICAO',
     'STATE_NAME',
     'FLT_DEP_1',
