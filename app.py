@@ -467,6 +467,9 @@ st.subheader("Prediction")
 if st.button("Predict Traffic"):
      pred = model.predict(input_df)[0]
      total_flights = filtered_df["FLT_TOT_1"].sum()
+     total_ifr = filtered_df["FLT_TOT_IFR_2"].sum()
+     active_airports = filtered_df["APT_ICAO"].nunique()
+
      col1, col2, col3, col4 = st.columns(4)
     
      with col1:
@@ -490,8 +493,8 @@ if st.button("Predict Traffic"):
      with col3:
           st.markdown(f"""
           <div class="kpi-card">
-           <div class="kpi-title">Airport</div>
-           <div class="kpi-value">{airport}</div>
+           <div class="kpi-title">Active Airports</div>
+           <div class="kpi-value">{active_airports}</div>
            <div class="kpi-delta-positive">▲ 2.8%</div>
           </div>
           """, unsafe_allow_html=True)
@@ -499,8 +502,8 @@ if st.button("Predict Traffic"):
      with col4:
           st.markdown(f"""
           <div class="kpi-card">
-           <div class="kpi-title">Predicted Flights</div>
-           <div class="kpi-value">{int(pred)}</div>
+           <div class="kpi-title">Total IFR Flights</div>
+           <div class="kpi-value">{total_ifr:,0.f}</div>
            <div class="kpi-delta-positive">▲ 2.8%</div>
           </div>
           """, unsafe_allow_html=True)
