@@ -340,30 +340,30 @@ filtered_df = df.copy()
 
 # Month
 filtered_df = filtered_df[
-    filtered_df["MONTH_NUM"] == Month
+    filtered_df["MONTH_NUM"] == month
 ]
 
 # Day
 filtered_df = filtered_df[
-    filtered_df["DAY"] == Day
+    filtered_df["DAY"] == day
 ]
 
 # Airport
 if airport != "All":
     filtered_df = filtered_df[
-        filtered_df["APT_ICAO"] == Airport(ICAO)
+        filtered_df["APT_ICAO"] == airport
     ]
 
 # State
 if state != "All":
     filtered_df = filtered_df[
-        filtered_df["STATE_NAME"] == State
+        filtered_df["STATE_NAME"] == state
     ]
 
 # Weekday
 if weekday != "All":
     filtered_df = filtered_df[
-        filtered_df["WEEKDAY"] == Weekday
+        filtered_df["WEEKDAY"] == weekday
     ]
 
 # Dep/Arr Ratio
