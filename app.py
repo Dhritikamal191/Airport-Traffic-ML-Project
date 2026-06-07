@@ -520,7 +520,7 @@ with tab1:
           st.plotly_chart(fig, use_container_width=True)
      with col2:     
           top_airports = (filtered_df.groupby('APT_ICAO')['FLT_TOT_1'].sum().nlargest(10).reset_index())
-          fig = px.area(top_airports,x='APT_ICAO',y='FLT_TOT_1',text_auto=True)
+          fig = px.bar(top_airports,x='APT_ICAO',y='FLT_TOT_1',text_auto=True)
           fig.update_layout(xaxis_title="Airport",yaxis_title="Total Flights",title=dict(text="Top 10 Busiest Airports",x=0.5, xanchor="center",font=dict(size=17, color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
           fig.update_xaxes(showgrid=False)
           fig.update_yaxes(showgrid=False)
