@@ -373,9 +373,9 @@ st.markdown("""
         ✈️ Airport Traffic Forecasting & Analytics
     </div>
 
-    <div class="header-subtitle">
-     <p>Machine Learning • Forecasting • SHAP Explainability • Monitoring</p>
-    </div>
+     <div class="header-subtitle">
+         Machine Learning • Forecasting • SHAP Explainability • Monitoring
+     </div>
 </div>
 """, unsafe_allow_html=True)
 
