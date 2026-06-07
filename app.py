@@ -268,7 +268,7 @@ st.markdown(
 # ===============================
 st.set_page_config(page_title="Airport Traffic Dashboard", layout="wide")
 
-st.title("Airport Traffic Forecasting Dashboard")
+st.title("Airport Traffic Forecasting and Analytics Dashboard")
 
 # ===============================
 # LOAD MODEL
