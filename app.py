@@ -327,8 +327,8 @@ with st.sidebar.expander("Model Inputs"):
     weekday = st.selectbox("Weekday (0=Mon)", list(range(7)))
     is_weekend = 1 if weekday >= 5 else 0
 
-    dep_arr_ratio = st.slider("Dep/Arr Ratio", 0.1, 3.0, 1.0)
-    ifr_ratio = st.slider("IFR Ratio", 0.0, 1.0, 0.5)
+    dep_arr_ratio = st.slider("Dep/Arr Ratio", 0.1, 3.0, (0.1, 3.0))
+    ifr_ratio = st.slider("IFR Ratio", 0.0, 1.0, (0.0, 1.0))
 
 input_df = pd.DataFrame({
     'YEAR':[year],'MONTH':[month],'DAY':[day],'WEEKDAY':[weekday],
