@@ -563,7 +563,7 @@ with tab5:
      st.plotly_chart(fig, use_container_width=True)
 
 with tab6:
-     filtered_df = df.sort_values("FLT_DATE")
+     filtered_df = filtered_df.sort_values("FLT_DATE")
      split_idx = int(len(df) * 0.7)
      reference = filtered_df.iloc[:split_idx]
      current = filtered_df.iloc[split_idx:]
