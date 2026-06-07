@@ -449,11 +449,24 @@ input_df = pd.DataFrame({
 # ===============================
 # PREDICTION + KPI
 # ===============================
+
+filtered_df = df.copy()
+
+# State Filter
+if state != "All":
+   filtered_df = filtered_df[
+        filtered_df["STATE_NAME"] == state
+   ]
+
+if day != "All":
+   filtered_df = filtered_df [filtered_df["DAY"] == day
+   ]
+
 st.subheader("Prediction")
 
 if st.button("Predict Traffic"):
      pred = model.predict(input_df)[0]
-
+     total_flights = filtered_df["FLT_TOT_1"].sum()
      col1, col2, col3, col4 = st.columns(4)
     
      with col1:
@@ -491,18 +504,6 @@ if st.button("Predict Traffic"):
            <div class="kpi-delta-positive">▲ 2.8%</div>
           </div>
           """, unsafe_allow_html=True)
-
-filtered_df = df.copy()
-
-# State Filter
-if state != "All":
-   filtered_df = filtered_df[
-        filtered_df["STATE_NAME"] == state
-   ]
-
-if day != "All":
-   filtered_df = filtered_df [filtered_df["DAY"] == day
-   ]
 
 # ===============================
 # INSIGHTS
