@@ -301,21 +301,6 @@ def load_data():
 
 df = load_data()
 
-feature_cols = [
-    'YEAR',
-    'MONTH',
-    'DAY'
-    'DEP_ARR_RATIO'
-    'IS_WEEKEND'
-    'IFR_RATIO'
-    'WEEKDAY'
-    'APT_ICAO',
-    'STATE_NAME',
-    'FLT_DEP_1',
-    'FLT_ARR_1',
-    'FLT_DEP_IFR_2',
-    'FLT_ARR_IFR_2'
-]
 # ===============================
 # SIDEBAR INPUT
 # ===============================
@@ -585,8 +570,8 @@ with tab4:
      X = filtered_df[['YEAR', 'MONTH', 'DAY', 'WEEKDAY', 'IS_WEEKEND','APT_ICAO', 'STATE_NAME','DEP_ARR_RATIO', 'IFR_RATIO']]
      y = filtered_df['FLT_TOT_1']
      X_filtered = filtered_df[feature_cols]
-     filtered_df['Predicted'] = model.predict(X_filtered)
-     actual_vs_pred_df = filtered_df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
+     df['Predicted'] = model.predict(X)
+     actual_vs_pred_df = df[['FLT_DATE', 'FLT_TOT_1', 'Predicted']].copy()
      actual_vs_pred_df.rename(columns={'FLT_TOT_1': 'Actual'}, inplace=True)
      fig = px.scatter(actual_vs_pred_df,x='Actual',y='Predicted',trendline="ols",opacity=0.6)
      min_val = min(actual_vs_pred_df['Actual'].min(), actual_vs_pred_df['Predicted'].min())
