@@ -603,3 +603,43 @@ with tab6:
      else:
           risk = "🔴 Significant Drift"
      
+     monthly = (
+     df.groupby('MONTH')['FLT_TOT_1']
+      .sum()
+      .reset_index()
+     )
+
+     monthly['Growth_%'] = monthly['FLT_TOT_1'].pct_change() * 100
+
+     airport_share = (
+     df.groupby('APT_ICAO')['FLT_TOT_1']
+      .sum()
+      .reset_index()
+     )
+
+     airport_share['Market Share %'] = (
+     airport_share['FLT_TOT_1']
+     / airport_share['FLT_TOT_1'].sum()
+     ) * 100
+
+     df['IFR_RATIO'] = (
+     df['FLT_TOT_IFR_2']
+     / (df['FLT_TOT_1'] + 1)
+     )
+
+     df['EFFICIENCY_SCORE'] = (
+     df['FLT_ARR_1']
+     / (df['FLT_DEP_1'] + 1)
+     )
+
+     corr_cols = [
+     'FLT_DEP_1',
+     'FLT_ARR_1',
+     'FLT_DEP_IFR_2',
+     'FLT_ARR_IFR_2',
+     'FLT_TOT_1'
+     ]
+
+     corr = df[corr_cols].corr()
+
+     
