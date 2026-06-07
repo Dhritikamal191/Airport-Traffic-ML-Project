@@ -622,14 +622,14 @@ with tab6:
      / airport_share['FLT_TOT_1'].sum()
      ) * 100
 
-     df['IFR_RATIO'] = (
-     df['FLT_TOT_IFR_2']
-     / (df['FLT_TOT_1'] + 1)
+     filtered_df['IFR_RATIO'] = (
+     filtered_df['FLT_TOT_IFR_2']
+     / (filtered_df['FLT_TOT_1'] + 1)
      )
 
-     df['EFFICIENCY_SCORE'] = (
-     df['FLT_ARR_1']
-     / (df['FLT_DEP_1'] + 1)
+     filtered_df['EFFICIENCY_SCORE'] = (
+     filtered_df['FLT_ARR_1']
+     / (filtered_df['FLT_DEP_1'] + 1)
      )
 
      corr_cols = [
@@ -640,7 +640,7 @@ with tab6:
      'FLT_TOT_1'
      ]
 
-     corr = df[corr_cols].corr()     
+     corr = filtered_df[corr_cols].corr()     
 
      corr_cols = [
      'FLT_DEP_1',
@@ -653,7 +653,7 @@ with tab6:
      'IFR_RATIO'
      ]
 
-     corr_matrix = df[corr_cols].corr()
+     corr_matrix = filtered_df[corr_cols].corr()
 
      fig = px.imshow(
      corr_matrix,
