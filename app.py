@@ -578,7 +578,7 @@ with tab6:
      fig.update_yaxes(showgrid=False)
      fig.update_layout(template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)") 
      st.plotly_chart(fig, use_container_width=True)
-     state_drift = (filtered_df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
+     state_drift = (df.groupby('STATE_NAME')['FLT_TOT_1'].mean().sort_values(ascending=False).head(15))
      fig = px.line(state_drift,title="State Traffic Drift")
      fig.update_xaxes(showgrid=False)
      fig.update_yaxes(showgrid=False)
