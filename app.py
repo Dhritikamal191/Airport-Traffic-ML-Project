@@ -456,24 +456,23 @@ if st.button("Predict Traffic"):
 
     col1, col2, col3, col4 = st.columns(4)
     
-    with col1:
-         st.markdown(f"""
-         <div class="kpi-card">
-          <div class="kpi-title">Total Flights</div>
-          <div class="kpi-value">{total_flights:,.0f}</div>
-          <div class="kpi-delta-positive">▲ 4.2%</div>
-         </div>
-         """, unsafe_allow_html=True)
+     with col1:
+          st.markdown(f"""
+          <div class="kpi-card">
+           <div class="kpi-title">Total Flights</div>
+           <div class="kpi-value">{total_flights:,.0f}</div>
+           <div class="kpi-delta-positive">▲ 4.2%</div>
+          </div>
+          """, unsafe_allow_html=True)
 
-    with col2:
-         st.markdown(f"""
-         <div class="kpi-card">
-          <div class="kpi-title">Predicted Flights</div>
-          <div class="kpi-value">{int(pred)}</div>
-          <div class="kpi-delta-positive">▲ 2.8%</div>
-         </div>
-         """, unsafe_allow_html=True)
-filtered_df = df.copy()
+     with col2:
+          st.markdown(f"""
+          <div class="kpi-card">
+           <div class="kpi-title">Predicted Flights</div>
+           <div class="kpi-value">{int(pred)}</div>
+           <div class="kpi-delta-positive">▲ 2.8%</div>
+          </div>
+          """, unsafe_allow_html=True)
 
      with col3:
           st.markdown(f"""
