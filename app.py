@@ -640,6 +640,38 @@ with tab6:
      'FLT_TOT_1'
      ]
 
-     corr = df[corr_cols].corr()
+     corr = df[corr_cols].corr()     
 
-     
+     corr_cols = [
+     'FLT_DEP_1',
+     'FLT_ARR_1',
+     'FLT_TOT_1',
+     'FLT_DEP_IFR_2',
+     'FLT_ARR_IFR_2',
+     'FLT_TOT_IFR_2',
+     'DEP_ARR_RATIO',
+     'IFR_RATIO'
+     ]
+
+     corr_matrix = df[corr_cols].corr()
+
+     fig = px.imshow(
+     corr_matrix,
+     text_auto=".2f",
+     aspect="auto",
+     color_continuous_scale="RdBu_r",
+     title="✈️ Airport Traffic Correlation Heatmap"
+     )
+
+     fig.update_layout(
+     template="plotly_dark",
+     height=700,
+     title=dict(
+        x=0.5,
+        font=dict(size=20)
+     ),
+     paper_bgcolor="rgba(0,0,0,0)",
+     plot_bgcolor="rgba(0,0,0,0)"
+     )
+
+     st.plotly_chart(fig, use_container_width=True)
