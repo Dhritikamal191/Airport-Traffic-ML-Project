@@ -526,6 +526,21 @@ with tab1:
           fig.update_yaxes(showgrid=False)
           st.plotly_chart(fig, use_container_width=True)
 
+     peak_month = monthly.loc[monthly['FLT_TOT_1'].idxmax(), 'MONTH']
+     peak_traffic = monthly['FLT_TOT_1'].max()
+
+     low_month = monthly.loc[monthly['FLT_TOT_1'].idxmin(), 'MONTH']
+     low_traffic = monthly['FLT_TOT_1'].min()
+
+     st.info(
+    f"""
+    📈 Peak traffic occurred in **Month {peak_month}**
+    with **{peak_traffic:,.0f} flights**.
+
+    📉 Lowest traffic occurred in **Month {low_month}**
+    with **{low_traffic:,.0f} flights**.
+    """
+     )
      # ===============================
      # SHAP EXPLANATION
      # ===============================
