@@ -364,7 +364,7 @@ if weekday != "All":
     ]
 
 if day != "All":
-   filtered_df =filtered_df [filtered_df [DAY] == day
+   filtered_df =filtered_df [filtered_df ["DAY"] == day
 ]
 # ===============================
 # INSIGHTS
