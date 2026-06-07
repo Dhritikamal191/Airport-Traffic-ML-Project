@@ -301,6 +301,16 @@ def load_data():
 
 df = load_data()
 
+feature_cols = [
+    'YEAR',
+    'MONTH_NUM',
+    'APT_ICAO',
+    'STATE_NAME',
+    'FLT_DEP_1',
+    'FLT_ARR_1',
+    'FLT_DEP_IFR_2',
+    'FLT_ARR_IFR_2'
+]
 # ===============================
 # SIDEBAR INPUT
 # ===============================
