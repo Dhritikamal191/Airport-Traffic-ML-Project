@@ -925,7 +925,7 @@ with tab6:
      total_flights = filtered_df["FLT_TOT_1"].sum()
      total_ifr = filtered_df["FLT_TOT_IFR_2"].sum()
      active_airports = filtered_df["APT_ICAO"].nunique()
-
+     top_feature = shap_importance.iloc[0]['Feature']
      st.markdown(f"""
 - ✈️ Total Flights Analyzed: **{total_flights:,.0f}**
 - 🛫 IFR Operations: **{total_ifr:,.0f}**
