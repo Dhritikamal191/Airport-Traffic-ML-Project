@@ -533,13 +533,23 @@ with tab1:
      low_traffic = monthly['FLT_TOT_1'].min()
 
      st.info(
-    f"""
+      f"""
     📈 Peak traffic occurred in **Month {peak_month}**
     with **{peak_traffic:,.0f} flights**.
 
     📉 Lowest traffic occurred in **Month {low_month}**
     with **{low_traffic:,.0f} flights**.
     """
+     )
+
+     top_airport = top_airports.iloc[0]['APT_ICAO']
+     top_volume = top_airports.iloc[0]['FLT_TOT_1']
+
+     st.success(
+      f"""
+         ✈️ **{top_airport}** handled the highest traffic volume
+    with **{top_volume:,.0f} total flights**.
+     """
      )
      # ===============================
      # SHAP EXPLANATION
@@ -864,5 +874,22 @@ with tab6:
      paper_bgcolor="rgba(0,0,0,0)",
      plot_bgcolor="rgba(0,0,0,0)"
      )
+     
+     st.plotly_chart(fig,use_container_width=True)
 
-     st.plotly_chart(fig, use_container_width=True)
+     corr_pairs = (
+     corr_matrix.abs()
+     .unstack()
+     .sort_values(ascending=False)
+     )
+     corr_pairs = corr_pairs[corr_pairs < 1]
+     top_corr = corr_pairs.head(1)
+
+     st.info(
+     f"""
+     🔍 Strongest relationship detected:
+     **{top_corr.index[0][0]}** and
+     **{top_corr.index[0][1]}**
+     with correlation **{top_corr.iloc[0]:.2f}**
+     """
+     )
