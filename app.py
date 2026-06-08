@@ -504,6 +504,17 @@ if st.button("Predict Traffic"):
           </div>
           """, unsafe_allow_html=True)
 
+     st.subheader("💡 Executive Summary")
+
+     st.markdown(f"""
+- ✈️ Total Flights Analyzed: **{total_flights:,.0f}**
+- 🛫 IFR Operations: **{total_ifr:,.0f}**
+- 🏢 Active Airports: **{active_airports}**
+- 📈 Peak Month: **{peak_month}**
+- 🔍 Most Important Feature: **{top_feature}**
+- 📊 Traffic Drift: **{drift_pct:.2f}%**
+     """) 
+    
 # ===============================
 # INSIGHTS
 # ===============================
@@ -603,6 +614,16 @@ with tab2:
             fig_waterfall = go.Figure(go.Bar(x=waterfall_df['SHAP Value'],y=waterfall_df['Feature'],orientation='h',marker=dict(color=waterfall_df['SHAP Value'],colorscale='RdBu')))
             fig_waterfall.update_layout(title=dict(text="Feature Contribution (Positive vs Negative)",x=0.5, xanchor="center",font=dict(size=17, color="white")),yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
             st.plotly_chart(fig_waterfall, use_container_width=True)
+
+            top_feature = shap_importance.iloc[0]['Feature']
+
+            st.info(
+            f"""
+    🤖 SHAP analysis identifies
+    **{top_feature}**
+    as the most influential factor driving traffic predictions.
+             """
+                )
             # ===============================
             # DEPENDENCE PLOT
             # ===============================
@@ -678,6 +699,20 @@ with tab3:
         fig.update_xaxes(showgrid=False)
         fig.update_yaxes(showgrid=False)
         st.plotly_chart(fig, use_container_width=True)
+
+        growth = (
+    (forecast_df['Predicted Flights'].iloc[-1]
+     - forecast_df['Predicted Flights'].iloc[0])
+    /
+    forecast_df['Predicted Flights'].iloc[0]
+) * 100
+
+        if growth > 0:
+           st.success(
+           f"📈 Forecast suggests traffic may increase by {growth:.1f}% over the next 6 months.")
+        else:
+             st.warning(
+             f"📉 Forecast suggests traffic may decrease by {abs(growth):.1f}% over the next 6 months.")
 
 with tab4:
      col1,col2=st.columns(2)
@@ -799,6 +834,7 @@ with tab6:
      else:
           risk = "🔴 Significant Drift"
      
+     st.subheader("Quantitative Analysis")  
      monthly = (
      df.groupby('MONTH')['FLT_TOT_1']
       .sum()
