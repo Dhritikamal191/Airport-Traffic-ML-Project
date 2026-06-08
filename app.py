@@ -502,24 +502,7 @@ if st.button("Predict Traffic"):
            <div class="kpi-value">{total_ifr}</div>
            <div class="kpi-delta-positive">▲ 2.8%</div>
           </div>
-          """, unsafe_allow_html=True)
-
-     st.subheader("💡 Executive Summary")
-
-     peak_month = (
-     filtered_df.groupby('MONTH')['FLT_TOT_1']
-     .sum()
-     .idxmax()
-     )
-
-     st.markdown(f"""
-- ✈️ Total Flights Analyzed: **{total_flights:,.0f}**
-- 🛫 IFR Operations: **{total_ifr:,.0f}**
-- 🏢 Active Airports: **{active_airports}**
-- 📈 Peak Month: **{peak_month}**
-- 🔍 Most Important Feature: **{top_feature}**
-- 📊 Traffic Drift: **{drift_pct:.2f}%**
-     """) 
+          """, unsafe_allow_html=True)     
     
 # ===============================
 # INSIGHTS
@@ -935,3 +918,16 @@ with tab6:
      with correlation **{top_corr.iloc[0]:.2f}**
      """
      )
+
+st.subheader("💡 Executive Summary")
+
+peak_month = (filtered_df.groupby('MONTH')['FLT_TOT_1'].sum().idxmax())
+
+st.markdown(f"""
+- ✈️ Total Flights Analyzed: **{total_flights:,.0f}**
+- 🛫 IFR Operations: **{total_ifr:,.0f}**
+- 🏢 Active Airports: **{active_airports}**
+- 📈 Peak Month: **{peak_month}**
+- 🔍 Most Important Feature: **{top_feature}**
+- 📊 Traffic Drift: **{drift_pct:.2f}%**
+     """) 
