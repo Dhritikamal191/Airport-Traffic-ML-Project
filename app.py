@@ -506,6 +506,12 @@ if st.button("Predict Traffic"):
 
      st.subheader("💡 Executive Summary")
 
+     peak_month = (
+     filtered_df.groupby('MONTH')['FLT_TOT_1']
+     .sum()
+     .idxmax()
+     )
+
      st.markdown(f"""
 - ✈️ Total Flights Analyzed: **{total_flights:,.0f}**
 - 🛫 IFR Operations: **{total_ifr:,.0f}**
