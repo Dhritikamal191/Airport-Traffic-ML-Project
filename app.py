@@ -458,15 +458,14 @@ if day != "All":
    filtered_df = filtered_df [filtered_df["DAY"] == day
    ]
 
-total_flights = filtered_df["FLT_TOT_1"].sum()
-     total_ifr = filtered_df["FLT_TOT_IFR_2"].sum()
-     active_airports = filtered_df["APT_ICAO"].nunique()
-
 st.subheader("Prediction")
 
 if st.button("Predict Traffic"):
      pred = model.predict(input_df)[0]
-     
+     total_flights = filtered_df["FLT_TOT_1"].sum()
+     total_ifr = filtered_df["FLT_TOT_IFR_2"].sum()
+     active_airports = filtered_df["APT_ICAO"].nunique()
+
      col1, col2, col3, col4 = st.columns(4)
     
      with col1:
@@ -920,11 +919,14 @@ with tab6:
      """
      )
 
-st.subheader("💡 Executive Summary")
+     st.subheader("💡 Executive Summary")
 
-peak_month = (filtered_df.groupby('MONTH')['FLT_TOT_1'].sum().idxmax())
+     peak_month = (filtered_df.groupby('MONTH')['FLT_TOT_1'].sum().idxmax())
+     total_flights = filtered_df["FLT_TOT_1"].sum()
+     total_ifr = filtered_df["FLT_TOT_IFR_2"].sum()
+     active_airports = filtered_df["APT_ICAO"].nunique()
 
-st.markdown(f"""
+     st.markdown(f"""
 - ✈️ Total Flights Analyzed: **{total_flights:,.0f}**
 - 🛫 IFR Operations: **{total_ifr:,.0f}**
 - 🏢 Active Airports: **{active_airports}**
