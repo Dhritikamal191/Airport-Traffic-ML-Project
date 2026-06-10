@@ -446,6 +446,10 @@ input_df = pd.DataFrame({
 # PREDICTION + KPI
 # ===============================
 
+mae=mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
 filtered_df = df.copy()
 
 # State Filter
@@ -457,6 +461,20 @@ if state != "All":
 if day != "All":
    filtered_df = filtered_df [filtered_df["DAY"] == day
    ]
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("MAE", f"{mae:.2f}")
+    st.info("Average flights the prediction differs from actual traffic.")
+
+with col2:
+    st.metric("RMSE", f"{rmse:.2f}")
+    st.info("Measures prediction error with higher penalty for large mistakes.")
+
+with col3:
+    st.metric("R² Score", f"{r2:.3f}")
+    st.info("Percentage of traffic variability explained by the model.")
 
 st.subheader("Prediction")
 
