@@ -447,6 +447,10 @@ input_df = pd.DataFrame({
 # PREDICTION + KPI
 # ===============================
 
+mae=mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
 filtered_df = df.copy()
 
 # State Filter
