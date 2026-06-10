@@ -1,11 +1,11 @@
 streamlit
 pandas
 numpy
-scikit-learn
+scikit-learn==1.5.0
 matplotlib
 seaborn
 plotly
-joblib
+joblib==1.4.2
 statsmodels
 shap
 xgboost
