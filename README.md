@@ -55,9 +55,9 @@ Target:
 
 | Metric | Value |
 |----------|----------|
-| MAE | 145 |
-| RMSE | 220 |
-| R² Score | 0.92 |
+| MAE | 234.04 |
+| RMSE | 307.98 |
+| R² Score | 0.08 |
 
 ## Dashboard Features
 
