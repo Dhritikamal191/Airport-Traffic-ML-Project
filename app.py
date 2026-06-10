@@ -447,10 +447,9 @@ input_df = pd.DataFrame({
 # PREDICTION + KPI
 # ===============================
 split_idx = int(len(input_df) * 0.8)
-X_test = input_df.iloc[split_idx:]
 y = df["FLT_TOT_1"]
 y_test = y.iloc[split_idx:]
-y_pred = model.predict(X_test)
+y_pred = model.predict(input_df)
 mae=mean_absolute_error(y_test, y_pred)
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 r2 = r2_score(y_test, y_pred)
