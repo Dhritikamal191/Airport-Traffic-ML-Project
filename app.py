@@ -9,7 +9,7 @@ import shap
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
-
+import json
 st.markdown("""
 <style>
 
@@ -382,6 +382,13 @@ st.markdown("""
 def load_model():
     with open("xgb_airport_pipeline.pkl", "rb") as f:
         return pickle.load(f)
+
+with open("metrics.json", "r") as f:
+    metrics = json.load(f)
+
+mae = metrics["mae"]
+rmse = metrics["rmse"]
+r2 = metrics["r2"]
 
 model = load_model()
 
