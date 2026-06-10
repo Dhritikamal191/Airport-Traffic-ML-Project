@@ -9,7 +9,8 @@ import shap
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
-from sklearn.metrics import mean_squared_error, mean_absolute_error, 
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score 
+
 st.markdown("""
 <style>
 
@@ -457,6 +458,20 @@ if state != "All":
 if day != "All":
    filtered_df = filtered_df [filtered_df["DAY"] == day
    ]
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("MAE", f"{mae:.2f}")
+    st.info("Average flights the prediction differs from actual traffic.")
+
+with col2:
+    st.metric("RMSE", f"{rmse:.2f}")
+    st.info("Measures prediction error with higher penalty for large mistakes.")
+
+with col3:
+    st.metric("R² Score", f"{r2:.3f}")
+    st.info("Percentage of traffic variability explained by the model.")
 
 st.subheader("Prediction")
 
