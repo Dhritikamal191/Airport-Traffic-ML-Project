@@ -3,7 +3,8 @@
 # ===============================
 import pandas as pd
 import numpy as np
-import pickle
+import pickle
+import json
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
@@ -103,9 +104,14 @@ y_pred = model.predict(X_test)
 mae=mean_absolute_error(y_test, y_pred)
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 r2 = r2_score(y_test, y_pred)
-print("MAE:", mae)
-print("RMSE:", rmse)
-print("R2:", r2)
+metrics={
+"mae": float(mae)
+"rmse": float(rmse)
+"r2": float(r2)
+}
+
+with open("metrics.json", "w") as f:
+    json.dump(metrics, f)
 
 # ===============================
 # ?? SAVE SINGLE PKL
