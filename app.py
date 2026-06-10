@@ -446,7 +446,7 @@ input_df = pd.DataFrame({
 # ===============================
 # PREDICTION + KPI
 # ===============================
-
+split_idx = int(len(input_df) * 0.8)
 y = df["FLT_TOT_1"]
 y_test = y.iloc[split_idx:]
 y_pred = model.predict(X_test)
