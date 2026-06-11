@@ -593,7 +593,7 @@ with tab2:
 
             # Convert sparse matrix -> dense
             if hasattr(X_trans, "toarray"):
-            X_trans = X_trans.toarray()
+               X_trans = X_trans.toarray()
 
             if hasattr(X_sample, "toarray"):
                X_sample = X_sample.toarray()
