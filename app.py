@@ -639,7 +639,7 @@ with tab2:
 
             st.plotly_chart(fig_waterfall, use_container_width=True)  
 
-            top_feature = shap_importance.iloc[0]['Feature']  
+            top_feature = global_importance.iloc[0]['Feature']  
 
             st.info(  
             f"""  
