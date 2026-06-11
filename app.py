@@ -392,8 +392,6 @@ r2 = metrics["r2"]
 
 model = load_model()
 
-st.write(model.feature_names_in_)
-
 # ===============================
 # LOAD DATA
 # ===============================
@@ -572,13 +570,18 @@ with tab1:
      # SHAP EXPLANATION
      # ===============================
 with tab2:
-     st.write(input_df.columns.tolist())
-     input_df["DEP_ARR_RATIO"] =pd.to_numeric (input_df["DEP_ARR_RATIO"],errors="coerce")
+     try:
+         X_trans = pre.transform(input_df)
+         st.success("Transform OK")
+except Exception as e:
+         st.error(f"Transform Error: {e}")
 
-     input_df["IFR_RATIO"] = pd.to_numeric(
-    input_df["IFR_RATIO"],errors="coerce"
-     )
-
+     try:
+         shap_values = explainer.shap_values(X_trans)
+         st.success("SHAP OK")
+except Exception as e:
+         st.error(f"SHAP Error: {e}")
+    
      st.subheader("Model Explanation")
      if "show_shap" not in st.session_state:
         st.session_state.show_shap = False
