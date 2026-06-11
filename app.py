@@ -468,16 +468,33 @@ if day != "All":
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric("MAE", f"{mae:.2f}")
-    st.info("Average flights the prediction differs from actual traffic.")
+     st.markdown(f"""
+          <div class="kpi-card">
+           <div class="kpi-title">MAE</div>
+           <div class="kpi-value">{mae:,.2f}
+          </div>
+          """, unsafe_allow_html=True)
+     
+     st.info("Average flights the prediction differs from actual traffic.")
 
 with col2:
-    st.metric("RMSE", f"{rmse:.2f}")
-    st.info("Measures prediction error with higher penalty for large mistakes.")
+     st.markdown(f"""
+          <div class="kpi-card">
+           <div class="kpi-title">RMSE</div>
+           <div class="kpi-value">{rmse:,.2f}
+          </div>
+          """, unsafe_allow_html=True)    
+     st.info("Measures prediction error with higher penalty for large mistakes.")
 
 with col3:
-    st.metric("R² Score", f"{r2:.3f}")
-    st.info("Percentage of traffic variability explained by the model.")
+     st.markdown(f"""
+          <div class="kpi-card">
+           <div class="kpi-title">R² Score</div>
+           <div class="kpi-value">{r2:,.3f}
+          </div>
+          """, unsafe_allow_html=True)
+   
+     st.info("Percentage of traffic variability explained by the model.")
 
 st.subheader("Prediction")
 
