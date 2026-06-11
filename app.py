@@ -393,7 +393,7 @@ r2 = metrics["r2"]
 model = load_model()
 
 st.write(model.feature_names_in_)
-st.write(input_df.columns.tolist())
+
 # ===============================
 # LOAD DATA
 # ===============================
@@ -572,7 +572,7 @@ with tab1:
      # SHAP EXPLANATION
      # ===============================
 with tab2:
-     pred = model.predict(input_df)[0]
+     st.write(input_df.columns.tolist())
      input_df["DEP_ARR_RATIO"] =pd.to_numeric (input_df["DEP_ARR_RATIO"],errors="coerce")
 
      input_df["IFR_RATIO"] = pd.to_numeric(
