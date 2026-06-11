@@ -465,55 +465,6 @@ if day != "All":
    filtered_df = filtered_df [filtered_df["DAY"] == day
    ]
 
-reference = filtered_df.iloc[:len(filtered_df)//2]
-current = filtered_df.iloc[len(filtered_df)//2:]
-
-ref_total = reference["FLT_TOT_1"].sum()
-curr_total = current["FLT_TOT_1"].sum()
-
-if ref_total != 0:
-    delta_pct = ((curr_total - ref_total) / ref_total) * 100
-else:
-    delta_pct = 0
-
-if delta_pct >= 0:
-    arrow = "▲"
-    color = "#22c55e"
-else:
-    arrow = "▼"
-    color = "#ef4444"
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-     st.markdown(f"""
-          <div class="kpi-card">
-           <div class="kpi-title">MAE</div>
-           <div class="kpi-value">{mae:,.2f}
-          </div>
-          """, unsafe_allow_html=True)
-     
-     st.info("Average flights the prediction differs from actual traffic.")
-
-with col2:
-     st.markdown(f"""
-          <div class="kpi-card">
-           <div class="kpi-title">RMSE</div>
-           <div class="kpi-value">{rmse:,.2f}
-          </div>
-          """, unsafe_allow_html=True)    
-     st.info("Measures prediction error with higher penalty for large mistakes.")
-
-with col3:
-     st.markdown(f"""
-          <div class="kpi-card">
-           <div class="kpi-title">R² Score</div>
-           <div class="kpi-value">{r2:,.3f}
-          </div>
-          """, unsafe_allow_html=True)
-   
-     st.info("Percentage of traffic variability explained by the model.")
-
 st.subheader("Prediction")
 
 if st.button("Predict Traffic"):
@@ -803,7 +754,58 @@ with tab4:
      fig.update_yaxes(showgrid=False)
      fig.update_traces(marker=dict(size=6),hovertemplate="<b>Actual:</b> %{x}<br>" +"<b>Predicted:</b> %{y}<extra></extra>")
      st.plotly_chart(fig, use_container_width=True)
+
 with tab5:
+
+     reference = filtered_df.iloc[:len(filtered_df)//2]
+     current = filtered_df.iloc[len(filtered_df)//2:]
+
+     ref_total = reference["FLT_TOT_1"].sum()
+     curr_total = current["FLT_TOT_1"].sum()
+
+     if ref_total != 0:
+        delta_pct = ((curr_total - ref_total) / ref_total) * 100
+     else:
+          delta_pct = 0
+ 
+     if delta_pct >= 0:
+        arrow = "▲"
+        color = "#22c55e"
+     else:
+          arrow = "▼"
+          color = "#ef4444"
+
+     col1, col2, col3 = st.columns(3)
+
+     with col1:
+          st.markdown(f"""
+              <div class="kpi-card">
+               <div class="kpi-title">MAE</div>
+               <div class= "kpi-value"> {mae:,.2f}
+              </div>
+              """, unsafe_allow_html=True)
+     
+          st.info("Average flights the prediction differs from actual traffic.")
+
+     with col2:
+          st.markdown(f"""
+              <div class="kpi-card">
+               <div class="kpi-title">RMSE</div>
+               <div class= "kpi-value"> {rmse:,.2f}
+              </div>
+              """, unsafe_allow_html=True)    
+          st.info("Measures prediction error with higher penalty for large mistakes.")
+
+     with col3:
+          st.markdown(f"""
+              <div class="kpi-card">
+               <div class="kpi-title">R² Score</div>
+               <div class= "kpi-value"> {r2:,.3f}
+              </div>
+              """, unsafe_allow_html=True)
+   
+          st.info("Percentage of traffic variability explained by the model.")
+
      fig = px.line(actual_vs_pred_df,x='FLT_DATE',y=['Actual', 'Predicted'])
      fig.update_layout(title=dict(text="Prediction Monitoring Over Time",x=0.5, xanchor="center",font=dict(size=17, color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
      fig.update_xaxes(showgrid=False)
