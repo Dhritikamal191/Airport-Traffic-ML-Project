@@ -571,7 +571,7 @@ with tab1:
      # ===============================
 with tab2:
      numeric_cols = [
-     'FLT_DEP'
+     'FLT_DEP',
      'FLT_ARR',
      'FLT_DEP_IFR',
      'FLT_ARR_IFR',
