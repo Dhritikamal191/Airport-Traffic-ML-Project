@@ -579,8 +579,8 @@ except Exception as e:
      try:
          shap_values = explainer.shap_values(X_trans)
          st.success("SHAP OK")
-except Exception as e:
-         st.error(f"SHAP Error: {e}")
+     except Exception as e:
+            st.error(f"SHAP Error: {e}")
     
      st.subheader("Model Explanation")
      if "show_shap" not in st.session_state:
