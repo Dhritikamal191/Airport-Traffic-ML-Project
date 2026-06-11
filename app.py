@@ -573,11 +573,12 @@ with tab2:
      for col in input_df.columns:
          try:
              pd.to_numeric(input_df[col])
-    except Exception:
-             st.write(
-            f"Problem column: {col}",
-            input_df[col].iloc[0]
-            )
+
+         except Exception:
+                st.write(
+                f"Problem column: {col}",
+                input_df[col].iloc[0]
+                )
 
      st.subheader("Model Explanation")
      if "show_shap" not in st.session_state:
