@@ -465,6 +465,24 @@ if day != "All":
    filtered_df = filtered_df [filtered_df["DAY"] == day
    ]
 
+reference = filtered_df.iloc[:len(filtered_df)//2]
+current = filtered_df.iloc[len(filtered_df)//2:]
+
+ref_total = reference["FLT_TOT_1"].sum()
+curr_total = current["FLT_TOT_1"].sum()
+
+if ref_total != 0:
+    delta_pct = ((curr_total - ref_total) / ref_total) * 100
+else:
+    delta_pct = 0
+
+if delta_pct >= 0:
+    arrow = "▲"
+    color = "#22c55e"
+else:
+    arrow = "▼"
+    color = "#ef4444"
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -511,7 +529,9 @@ if st.button("Predict Traffic"):
           <div class="kpi-card">
            <div class="kpi-title">Total Flights</div>
            <div class="kpi-value">{total_flights:,.0f}</div>
-           <div class="kpi-delta-positive">▲ 4.2%</div>
+           <div style="color:{color};font-weight:600;">
+        {arrow} {abs(delta_pct):.1f}%
+           </div>
           </div>
           """, unsafe_allow_html=True)
 
@@ -520,7 +540,9 @@ if st.button("Predict Traffic"):
           <div class="kpi-card">
            <div class="kpi-title">Predicted Flights</div>
            <div class="kpi-value">{int(pred)}</div>
-           <div class="kpi-delta-positive">▲ 2.8%</div>
+           <div style="color:{color};font-weight:600;">
+        {arrow} {abs(delta_pct):.1f}%
+           </div>
           </div>
           """, unsafe_allow_html=True)
 
@@ -529,7 +551,9 @@ if st.button("Predict Traffic"):
           <div class="kpi-card">
            <div class="kpi-title">Active Airports</div>
            <div class="kpi-value">{active_airports}</div>
-           <div class="kpi-delta-positive">▲ 2.8%</div>
+           <div style="color:{color};font-weight:600;">
+        {arrow} {abs(delta_pct):.1f}%
+           </div>
           </div>
           """, unsafe_allow_html=True)
 
@@ -538,7 +562,9 @@ if st.button("Predict Traffic"):
           <div class="kpi-card">
            <div class="kpi-title">Total IFR Flights</div>
            <div class="kpi-value">{total_ifr}</div>
-           <div class="kpi-delta-positive">▲ 2.8%</div>
+           <div style="color:{color};font-weight:600;">
+        {arrow} {abs(delta_pct):.1f}%
+           </div>
           </div>
           """, unsafe_allow_html=True)     
     
