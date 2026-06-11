@@ -570,15 +570,19 @@ with tab1:
      # SHAP EXPLANATION
      # ===============================
 with tab2:
-     for col in input_df.columns:
-         try:
-             pd.to_numeric(input_df[col])
+    
+     for col in numeric_cols:
+         input_df[col] = (
+         input_df[col]
+         .astype(str)
+         .str.replace('[', '', regex=False)
+         .str.replace(']', '', regex=False)
+         )
 
-         except Exception:
-                st.write(
-                f"Problem column: {col}",
-                input_df[col].iloc[0]
-                )
+         input_df[col] = pd.to_numeric(
+         input_df[col],
+         errors='coerce'
+         )
 
      st.subheader("Model Explanation")
      if "show_shap" not in st.session_state:
