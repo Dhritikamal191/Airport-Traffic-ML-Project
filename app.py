@@ -631,8 +631,8 @@ with tab2:
     ),
     cells=dict(
         values=[
-            shap_importance["Feature"].head(10),
-            shap_importance["Importance"].head(10).round(4)
+            global_importance["Feature"].head(10),
+            global_importance["Importance"].head(10).round(4)
         ],
         fill_color="rgba(15,23,42,0.9)",
         font=dict(color="white")
