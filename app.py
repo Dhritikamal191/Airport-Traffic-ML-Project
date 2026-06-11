@@ -570,7 +570,15 @@ with tab1:
      # SHAP EXPLANATION
      # ===============================
 with tab2:
-    
+     numeric_cols = [
+     'FLT_DEP_1',
+     'FLT_ARR_1',
+     'FLT_DEP_IFR_2',
+     'FLT_ARR_IFR_2',
+     'DEP_ARR_RATIO',
+     'IFR_RATIO'
+     ]
+
      for col in numeric_cols:
          input_df[col] = (
          input_df[col]
