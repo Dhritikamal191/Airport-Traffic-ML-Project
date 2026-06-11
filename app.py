@@ -705,10 +705,10 @@ with tab3:
         st.plotly_chart(fig, use_container_width=True)
 
         growth = (
-    (forecast_df['Predicted Flights'].iloc[-1]
-     - forecast_df['Predicted Flights'].iloc[0])
+    (future_df['Predicted Flights'].iloc[-1]
+     - future_df['Predicted Flights'].iloc[0])
     /
-    forecast_df['Predicted Flights'].iloc[0]
+    future_df['Predicted Flights'].iloc[0]
 ) * 100
 
         if growth > 0:
