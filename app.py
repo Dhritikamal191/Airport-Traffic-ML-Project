@@ -570,7 +570,11 @@ with tab1:
      # SHAP EXPLANATION
      # ===============================
 with tab2:
-     st.write(input_df.columns.tolist())
+     input_df["DEP_ARR_RATIO"] =pd.to_numeric (input_df["DEP_ARR_RATIO"],errors="coerce")
+
+     input_df["IFR_RATIO"] = pd.to_numeric(
+    input_df["IFR_RATIO"],errors="coerce"
+     )
 
      st.subheader("Model Explanation")
      if "show_shap" not in st.session_state:
