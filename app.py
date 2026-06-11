@@ -392,6 +392,8 @@ r2 = metrics["r2"]
 
 model = load_model()
 
+st.write(model.feature_names_in_)
+st.write(input_df.columns.tolist())
 # ===============================
 # LOAD DATA
 # ===============================
