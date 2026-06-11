@@ -570,19 +570,14 @@ with tab1:
      # SHAP EXPLANATION
      # ===============================
 with tab2:
-     numeric_cols = [
-     "FLT_DEP_1",
-     "FLT_ARR_1",
-     "FLT_DEP_IFR_2",
-     "FLT_ARR_IFR_2",
-     "DEP_ARR_RATIO",
-     "IFR_RATIO"
-     ]
-
-     for col in numeric_cols:
-         input_df[col] = pd.to_numeric(
-         input_df[col],
-         errors="coerce")
+     for col in input_df.columns:
+         try:
+             pd.to_numeric(input_df[col])
+    except Exception:
+             st.write(
+            f"Problem column: {col}",
+            input_df[col].iloc[0]
+            )
 
      st.subheader("Model Explanation")
      if "show_shap" not in st.session_state:
