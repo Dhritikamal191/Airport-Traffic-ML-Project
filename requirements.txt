@@ -7,5 +7,5 @@ seaborn
 plotly
 joblib==1.4.2
 statsmodels
-shap
-xgboost
+shap==0.46.0
+xgboost==2.1.1
