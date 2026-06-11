@@ -623,6 +623,28 @@ with tab2:
 
             st.plotly_chart(fig_global, use_container_width=True)
 
+            fig = go.Figure(data=[go.Table(
+    header=dict(
+        values=["Feature", "Importance"],
+        fill_color="#2563eb",
+        font=dict(color="white", size=14)
+    ),
+    cells=dict(
+        values=[
+            shap_importance["Feature"].head(10),
+            shap_importance["Importance"].head(10).round(4)
+        ],
+        fill_color="rgba(15,23,42,0.9)",
+        font=dict(color="white")
+    )
+)])
+
+            fig.update_layout(
+    paper_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=0,r=0,t=10,b=0)
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
             # ===============================
             # LOCAL EXPLANATION (WATERFALL STYLE)
             # ===============================
