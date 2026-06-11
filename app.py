@@ -579,160 +579,104 @@ with tab2:
         st.session_state.show_shap = True
 
      if st.session_state.show_shap:
-
         try:
+            pre = model.named_steps['preprocessor']
+            xgb = model.named_steps['model']
 
-            pre = model.named_steps["preprocessor"]
-            xgb = model.named_steps["model"]
-  
             # ===============================
             # TRANSFORM DATA
             # ===============================
+
             X_trans = pre.transform(input_df)
-            X_sample = pre.transform(df.sample(min(200, len(df)), random_state=42))
 
-            # Convert sparse matrix -> dense
-            if hasattr(X_trans, "toarray"):
-               X_trans = X_trans.toarray()
+            # Background data for global SHAP
 
-            if hasattr(X_sample, "toarray"):
-               X_sample = X_sample.toarray()
+            X_sample = pre.transform(df.sample(200))
 
-               X_trans = np.asarray(X_trans, dtype=float)
-               X_sample = np.asarray(X_sample, dtype=float)
+            # Feature names
 
             feature_names = pre.get_feature_names_out()
 
             # ===============================
             # SHAP EXPLAINER
             # ===============================
+
             explainer = shap.TreeExplainer(xgb)
 
             shap_values = explainer.shap_values(X_trans)
-            shap_values_global = explainer.shap_values(X_sample)
 
-            shap_values = np.array(shap_values)
-            shap_values_global = np.array(shap_values_global)
+            shap_values_global = explainer.shap_values(X_sample)
 
             # ===============================
             # GLOBAL FEATURE IMPORTANCE
             # ===============================
+
             st.subheader("Global SHAP Feature Importance")
 
-            shap_importance = pd.DataFrame({
-            "Feature": feature_names,
-            "Importance": np.abs(shap_values_global).mean(axis=0)
-        }).sort_values("Importance", ascending=False)
+            shap_df = pd.DataFrame(shap_values_global, columns=feature_names)
 
-            fig_global = px.bar(
-            shap_importance.head(15),
-            x="Importance",
-            y="Feature",
-            orientation="h",
-            color="Importance",
-            color_continuous_scale="Blues"
-            )
-   
-            fig_global.update_layout(
-            title="Top Features (Global Impact)",
-            yaxis={'categoryorder': 'total ascending'},
-            template="plotly_dark",
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)"
-            )
+            global_importance = pd.DataFrame({'Feature': feature_names,'Importance': abs(shap_df).mean().values}).sort_values(by='Importance', ascending=False)
+
+            fig_global = px.bar(global_importance.head(15),x='Importance',y='Feature',orientation='h',color='Importance',color_continuous_scale='Blues')
+
+            fig_global.update_layout (title=dict(text="Top Features (Global Impact)",x=0.5, xanchor="center",font=dict(size=17, color="white")),yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 
             st.plotly_chart(fig_global, use_container_width=True)
 
             # ===============================
-            # LOCAL EXPLANATION
+            # LOCAL EXPLANATION (WATERFALL STYLE)
             # ===============================
-            st.subheader("Local Explanation")
+
+            st.subheader("Local Explanation (Waterfall Style)")
 
             local_vals = shap_values[0]
 
-            waterfall_df = pd.DataFrame({
-            "Feature": feature_names,
-            "SHAP Value": local_vals
-            })
+            waterfall_df = pd.DataFrame({'Feature': feature_names,'SHAP Value': local_vals}).sort_values(by='SHAP Value', key=abs, ascending=False).head(10)
 
-            waterfall_df = waterfall_df.reindex(
-            waterfall_df["SHAP Value"].abs()
-            .sort_values(ascending=False).index
-        ).head(10)
+            fig_waterfall = go.Figure(go.Bar(x=waterfall_df['SHAP Value'],y=waterfall_df['Feature'],orientation='h',marker=dict(color=waterfall_df['SHAP Value'],colorscale='RdBu')))
 
-            fig_waterfall = px.bar(
-            waterfall_df,
-            x="SHAP Value",
-            y="Feature",
-            orientation="h",
-            color="SHAP Value",
-            color_continuous_scale="RdBu"
-            )
+            fig_waterfall.update_layout (title=dict(text="Feature Contribution (Positive vs Negative)",x=0.5, xanchor="center",font=dict(size=17, color="white")),yaxis={'categoryorder':'total ascending'},template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)")
 
-            fig_waterfall.update_layout(
-            template="plotly_dark",
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)"
-            )
+            st.plotly_chart(fig_waterfall, use_container_width=True)  
 
-            st.plotly_chart(fig_waterfall, use_container_width=True)
+            top_feature = shap_importance.iloc[0]['Feature']  
 
-            # ===============================
-            # INSIGHT
-            # ===============================
-            top_feature = shap_importance.iloc[0]["Feature"]
-
-            st.info(
-            f"🤖 The most influential feature in the current prediction is **{top_feature}**."
-        )
-
+            st.info(  
+            f"""  
+🤖 SHAP analysis identifies  
+**{top_feature}**  
+as the most influential factor driving traffic predictions.  
+             """  
+                )
             # ===============================
             # DEPENDENCE PLOT
             # ===============================
-            st.subheader("Feature Dependence")
 
-            interaction_feature = st.selectbox(
-            "Select Feature",
-            feature_names
-            )
-  
-            feature_index = list(feature_names).index(
-            interaction_feature
-            )
+            interaction_feature = st.selectbox("Select Interaction Feature (color)",feature_names,index=1)
 
-            dependence_df = pd.DataFrame({
-            "Feature Value": X_sample[:, feature_index],
-            "SHAP Value": shap_values_global[:, feature_index]
-            })
+            interaction_index = list(feature_names).index(interaction_feature)
 
-            fig_dep = px.scatter(
-            dependence_df,
-            x="Feature Value",
-            y="SHAP Value",
-            color="SHAP Value",
-            color_continuous_scale="Viridis",
-            trendline="lowess"
-            )
- 
-            fig_dep.update_layout(
-            title=f"Dependence Plot: {interaction_feature}",
-            template="plotly_dark",
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)"
-            )
- 
-            fig_dep.update_xaxes (showgrid=False)
-            fig_dep.update_yaxes (showgrid=False)
+            feature_index = list(feature_names).index(interaction_feature)
+
+            dependence_df = pd.DataFrame({'Feature Value': X_sample[:, feature_index],'SHAP Value': shap_values_global[:, feature_index],'Interaction Feature': X_sample[:, interaction_index]})
+
+            fig_dep = px.scatter(dependence_df,x='Feature Value',y='SHAP Value',color='Interaction Feature', color_continuous_scale='Viridis',opacity=0.7,trendline="lowess")
+
+            # ===============================
+            # LAYOUT IMPROVEMENTS
+            # ===============================           
+            fig_dep.update_layout (title=dict(text=f"Dependence Plot:{interaction_feature}",x=0.5, xanchor="center",font=dict(size=17,color="white")),legend=dict(font=dict(color="white")),template="plotly_dark",paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",xaxis_title=f"{interaction_feature} Value",yaxis_title="SHAP Impact",coloraxis_colorbar=dict(title=interaction_feature),title_x=0.3)
+
+            fig_dep.update_traces (marker=dict(size=6), hovertemplate="<b>Feature Value:</b> %{x}<br>" +"<b>SHAP Value:</b> %{y}<br>" +"<b>Interaction:</b> %{marker.color}<extra></extra>")
+
+            fig.update_xaxes(showgrid=False)
+            fig.update_yaxes(showgrid=False)
 
             st.plotly_chart(fig_dep, use_container_width=True)
 
         except Exception as e:
-
-                st.error(f"SHAP failed: {str(e)}")
-
-        st.info(
-            "Model prediction still works normally. SHAP explanation is temporarily unavailable."
-        )
+               st.error(f"SHAP failed: {e}")
+     
      # ===============================
      # NEXT 6 MONTHS FORECAST
      # ===============================
